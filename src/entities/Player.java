@@ -39,6 +39,12 @@ public class Player extends Entity {
 		setAnimation();
 	}
 
+	protected void drawHitbox(Graphics g) {
+		//For debugging the hitbox
+		g.setColor(Color.PINK);
+		g.drawRect((int)hitbox.x,(int) hitbox.y,(int) hitbox.width, (int)hitbox.height);
+	}
+
 	public void render(Graphics g) {
 		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
 //		drawHitbox(g);
