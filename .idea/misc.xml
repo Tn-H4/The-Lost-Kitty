@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_24" project-jdk-name="23" project-jdk-type="JavaSDK">
 =======
 <<<<<<< HEAD
@@ -11,5 +12,9 @@
 >>>>>>> f8f4f56492c97d53d123f12c6a572e70259f7fbf
     <output url="file://$PROJECT_DIR$/classes" />
 >>>>>>> aeac1e404679d782dfb82eae6c0de4c5c95cacae
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+>>>>>>> dc4ffea3df1322d4daf47b457fce7e7f22a6c632
   </component>
 </project>
