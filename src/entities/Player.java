@@ -2,7 +2,8 @@ package entities;
 
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
-import java.awt.Graphics;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import main.Game;
@@ -29,7 +30,7 @@ public class Player extends Entity {
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
-		initHitbox(x, y, 20 * Game.SCALE, 27 * Game.SCALE);
+		initHitbox(x, y, 25 * Game.SCALE, 27 * Game.SCALE);
 
 	}
 
@@ -39,9 +40,15 @@ public class Player extends Entity {
 		setAnimation();
 	}
 
+	protected void drawHitbox(Graphics g) {
+		//For debugging the hitbox
+		g.setColor(Color.PINK);
+		g.drawRect((int)hitbox.x,(int) hitbox.y,(int) hitbox.width, (int)hitbox.height);
+	}
+
 	public void render(Graphics g) {
 		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
-//		drawHitbox(g);
+		drawHitbox(g);
 	}
 
 	private void updateAnimationTick() {
