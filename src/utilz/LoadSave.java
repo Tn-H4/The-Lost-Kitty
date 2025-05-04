@@ -17,7 +17,7 @@ public class LoadSave {
 	public static final String SOUND_BUTTONS = "SoundButton.png";
 	public static final String URM_BUTTONS = "GreenButton.png";
 	public static final String VOLUME_BUTTONS = "VolumeBar.png";
-	public static final String MENU_BACKGROUND_IMG = "BackgroundGame.png";
+	public static final String MENU_BACKGROUND = "BackgroundGame.png";
 	public static final String PLAYING_BG_IMG = "BackgroundLevel.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {

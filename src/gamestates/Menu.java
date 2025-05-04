@@ -18,6 +18,7 @@ public class Menu extends State implements Statemethods {
     public Menu(Game game) {
         super(game);
         loadButtons();
+        backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND);
     }
 
     private void loadButtons() {
@@ -34,8 +35,7 @@ public class Menu extends State implements Statemethods {
 
     @Override
     public void draw(Graphics g) {
-
-        g.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 
         for (MenuButton mb : buttons)
             mb.draw(g);
