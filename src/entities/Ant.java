@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import static utilz.Constants.Directions.*;
 
 import main.Game;
-
+//Ant function: hit when the player go through it
 public class Ant extends Enemy {
 
     private int attackBoxOffsetX, hitboxOffsetX;
