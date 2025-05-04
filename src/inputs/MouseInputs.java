@@ -8,23 +8,27 @@ import gamestates.Gamestate;
 import main.GamePanel;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
-	
+
 	private GamePanel gamePanel;
+
 	public MouseInputs(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 	}
-	
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		switch (Gamestate.state) {
 			case PLAYING:
 				gamePanel.getGame().getPlaying().mouseDragged(e);
 				break;
+			case OPTIONS:
+				gamePanel.getGame().getGameOptions().mouseDragged(e);
+				break;
 			default:
 				break;
 
 		}
+
 	}
 
 	@Override
@@ -36,9 +40,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 			case PLAYING:
 				gamePanel.getGame().getPlaying().mouseMoved(e);
 				break;
+			case OPTIONS:
+				gamePanel.getGame().getGameOptions().mouseMoved(e);
+				break;
 			default:
 				break;
+
 		}
+
 	}
 
 	@Override
@@ -51,7 +60,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 				break;
 
 		}
-		
+
 	}
 
 	@Override
@@ -63,9 +72,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 			case PLAYING:
 				gamePanel.getGame().getPlaying().mousePressed(e);
 				break;
+			case OPTIONS:
+				gamePanel.getGame().getGameOptions().mousePressed(e);
+				break;
 			default:
 				break;
+
 		}
+
 	}
 
 	@Override
@@ -77,9 +91,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 			case PLAYING:
 				gamePanel.getGame().getPlaying().mouseReleased(e);
 				break;
+			case OPTIONS:
+				gamePanel.getGame().getGameOptions().mouseReleased(e);
+				break;
 			default:
 				break;
+
 		}
+
 	}
 
 	@Override
