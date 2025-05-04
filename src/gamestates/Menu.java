@@ -43,7 +43,6 @@ public class Menu extends State implements Statemethods {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -54,7 +53,6 @@ public class Menu extends State implements Statemethods {
                 mb.setMousePressed(true);
             }
         }
-
     }
 
     @Override
@@ -68,13 +66,11 @@ public class Menu extends State implements Statemethods {
         }
 
         resetButtons();
-
     }
 
     private void resetButtons() {
         for (MenuButton mb : buttons)
             mb.resetBools();
-
     }
 
     @Override
@@ -87,20 +83,16 @@ public class Menu extends State implements Statemethods {
                 mb.setMouseOver(true);
                 break;
             }
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
             Gamestate.state = Gamestate.PLAYING;
-
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
 
     }
-
 }

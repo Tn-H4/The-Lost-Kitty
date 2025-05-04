@@ -7,18 +7,18 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-import main.Game;
-
 public class LoadSave {
 
 	public static final String PLAYER_ATLAS = "PlayerSprite.png";
-	public static final String LEVEL_ATLAS = "BackgroundLevel.png";
+	public static final String LEVEL_ATLAS = "Platform.png";
 	public static final String LEVEL_ONE_DATA = "TestStage.png";
 	public static final String MENU_BUTTONS = "MenuButton.png";
 	public static final String PAUSE_BACKGROUND = "PauseMenu.png";
 	public static final String SOUND_BUTTONS = "SoundButton.png";
 	public static final String URM_BUTTONS = "GreenButton.png";
 	public static final String VOLUME_BUTTONS = "VolumeBar.png";
+	public static final String MENU_BACKGROUND_IMG = "BackgroundGame.png";
+	public static final String PLAYING_BG_IMG = "BackgroundLevel.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
@@ -39,8 +39,8 @@ public class LoadSave {
 	}
 
 	public static int[][] GetLevelData() {
-		int[][] lvlData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
