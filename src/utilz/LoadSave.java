@@ -1,21 +1,13 @@
 package utilz;
 
-import java.awt.Color;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
-import entities.Ant;
-import main.Game;
-
-import static utilz.Constants.EnemyConstants.ANT;
 
 public class LoadSave {
 
@@ -29,14 +21,16 @@ public class LoadSave {
 	public static final String MENU_BACKGROUND = "BackgroundGame.png";
 	public static final String PLAYING_BG_IMG = "BackgroundLevel.png";
 	public static final String ANT_SPRITE = "AntSprite.png";
+	public static final String MANTIS_SPRITE = "MantisSprite.png";
 	public static final String STATUS_BAR = "HealthBar.png";
 	public static final String COMPLETED_IMG = "LevelCompleted.png";
-	public static final String POTION_ATLAS = "Fish.png";
+	public static final String FISH_IMG = "Fish.png";
 	public static final String TRAP_ATLAS = "Vines.png";
-	public static final String CANNON_ATLAS = "BeeSprite.png";
-	public static final String CANNON_BALL = "Sting.png";
+	public static final String BEE_ATLAS = "BeeSprite.png";
+	public static final String STING_IMG = "Sting.png";
 	public static final String DEATH_SCREEN = "DeathScreen.png";
 	public static final String OPTIONS_MENU = "OptionMenu.png";
+	public static final String GAME_COMPLETED = "GameCompleted";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

@@ -1,12 +1,14 @@
 package entities;
 
-import static utilz.Constants.*;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
 
+import gamestates.Playing;
+
 import static utilz.Constants.Directions.*;
+import static utilz.Constants.*;
 
 import main.Game;
 
@@ -18,6 +20,7 @@ public abstract class Enemy extends Entity {
     protected float attackDistance = Game.TILES_SIZE;
     protected boolean active = true;
     protected boolean attackChecked;
+    protected int attackBoxOffsetX;
 
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
@@ -28,10 +31,36 @@ public abstract class Enemy extends Entity {
         walkSpeed = Game.SCALE * 0.35f;
     }
 
+    protected void updateAttackBox() {
+        attackBox.x = hitbox.x - attackBoxOffsetX;
+        attackBox.y = hitbox.y;
+    }
+
+    protected void updateAttackBoxFlip() {
+        if (walkDir == RIGHT)
+            attackBox.x = hitbox.x + hitbox.width;
+        else
+            attackBox.x = hitbox.x - attackBoxOffsetX;
+
+        attackBox.y = hitbox.y;
+    }
+
+    protected void initAttackBox(int w, int h, int attackBoxOffsetX) {
+        attackBox = new Rectangle2D.Float(x, y, (int) (w * Game.SCALE), (int) (h * Game.SCALE));
+        this.attackBoxOffsetX = (int) (Game.SCALE * attackBoxOffsetX);
+    }
+
     protected void firstUpdateCheck(int[][] lvlData) {
         if (!IsEntityOnFloor(hitbox, lvlData))
             inAir = true;
         firstUpdate = false;
+    }
+
+    protected void inAirChecks(int[][] lvlData, Playing playing) {
+        if (state != DEAD) {
+            updateInAir(lvlData);
+            playing.getObjectManager().checkVinesTouched(this);
+        }
     }
 
     protected void updateInAir(int[][] lvlData) {
@@ -76,7 +105,6 @@ public abstract class Enemy extends Entity {
                 if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))
                     return true;
             }
-
         return false;
     }
 
@@ -87,41 +115,51 @@ public abstract class Enemy extends Entity {
 
     protected boolean isPlayerCloseForAttack(Player player) {
         int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
-        return absValue <= attackDistance;
-    }
-
-    protected void newState(int enemyState) {
-        this.state = enemyState;
-        aniTick = 0;
-        aniIndex = 0;
+        switch (enemyType) {
+            case MANTIS, ANT -> {
+                return absValue <= attackDistance;
+            }
+        }
+        return false;
     }
 
     public void hurt(int amount) {
         currentHealth -= amount;
-//        if (currentHealth <= 0)
+        if (currentHealth <= 0)
             newState(DEAD);
-//        else
-//            newState(HIT);
+        else {
+            if (walkDir == LEFT)
+                pushBackDir = RIGHT;
+            else
+                pushBackDir = LEFT;
+            pushBackOffsetDir = UP;
+            pushDrawOffset = 0;
+        }
     }
 
     protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
         if (attackBox.intersects(player.hitbox))
-            player.changeHealth(-GetEnemyDmg(enemyType));
+            player.changeHealth(-GetEnemyDmg(enemyType), this);
+        else {
+            if (enemyType == ANT)
+                return;
+        }
         attackChecked = true;
-
     }
 
-    protected void updateAnimationTick(int enemy_type) {
+    protected void updateAnimationTick() {
         aniTick++;
         if (aniTick >= ANI_SPEED) {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-                aniIndex = 0;
+                if (enemyType == MANTIS || enemyType == ANT) {
+                    aniIndex = 0;
 
-                switch (state) {
-//                    case ATTACK -> state = IDLE;
-                    case DEAD -> active = false;
+                    switch (state) {
+                        case ATTACK -> state = IDLE;
+                        case DEAD -> active = false;
+                    }
                 }
 
             }
@@ -143,11 +181,31 @@ public abstract class Enemy extends Entity {
         newState(IDLE);
         active = true;
         airSpeed = 0;
+
+        pushDrawOffset = 0;
+
     }
 
+    public int flipX() {
+        if (walkDir == RIGHT)
+            return width;
+        else
+            return 0;
+    }
+
+    public int flipW() {
+        if (walkDir == RIGHT)
+            return -1;
+        else
+            return 1;
+    }
 
     public boolean isActive() {
         return active;
+    }
+
+    public float getPushDrawOffset() {
+        return pushDrawOffset;
     }
 
 }

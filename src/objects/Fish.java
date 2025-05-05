@@ -9,7 +9,6 @@ public class Fish extends GameObject {
 
     public Fish(int x, int y, int objType) {
         super(x, y, objType);
-        doAnimation = true;
 
         initHitbox(7, 14);
 
@@ -20,7 +19,6 @@ public class Fish extends GameObject {
     }
 
     public void update() {
-        updateAnimationTick();
         updateHover();
     }
 

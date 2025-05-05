@@ -15,23 +15,13 @@ public class Ant extends Enemy {
     public Ant(float x, float y) {
         super(x, y, ANT_WIDTH, ANT_HEIGHT, ANT);
         initHitbox(42, 19);
-        initAttackBox();
-    }
-
-    private void initAttackBox() {
-        attackBox = new Rectangle2D.Float(x, y, (int) (42 * Game.SCALE), (int) (19 * Game.SCALE));
-        attackBoxOffsetX = (int) (Game.SCALE * 14);
+        initAttackBox(42, 19, 30);
     }
 
     public void update(int[][] lvlData, Player player) {
         updateBehavior(lvlData, player);
-        updateAnimationTick(ANT);
+        updateAnimationTick();
         updateAttackBox();
-    }
-
-    private void updateAttackBox() {
-        attackBox.x = hitbox.x - attackBoxOffsetX;
-        attackBox.y = hitbox.y;
     }
 
     private void updateBehavior(int[][] lvlData, Player player) {
@@ -45,10 +35,15 @@ public class Ant extends Enemy {
                 case IDLE:
                     newState(RUNNING);
                 case RUNNING:
+
+                        if (isPlayerCloseForAttack(player))
+                            newState(ATTACK);
+
                     move(lvlData);
-                    if (isPlayerCloseForAttack(player))
-                        if (aniIndex == 0)
-                            attackChecked = false;
+                    break;
+                case ATTACK:
+                    if (aniIndex == 0)
+                        attackChecked = false;
                     if (aniIndex == 1 && !attackChecked)
                         checkPlayerHit(attackBox, player);
                     break;

@@ -4,7 +4,6 @@ import static utilz.Constants.UI.URMButtons.URM_SIZE;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -18,7 +17,7 @@ public class GameOverOverlay {
     private Playing playing;
     private BufferedImage img;
     private int imgX, imgY, imgW, imgH;
-    private UrmButton menu, retry;
+    private UrmButton menu, play;
 
     public GameOverOverlay(Playing playing) {
         this.playing = playing;
@@ -28,9 +27,9 @@ public class GameOverOverlay {
 
     private void createButtons() {
         int menuX = (int) (335 * Game.SCALE);
-        int retryX = (int) (440 * Game.SCALE);
+        int playX = (int) (440 * Game.SCALE);
         int y = (int) (195 * Game.SCALE);
-        retry = new UrmButton(retryX, y, URM_SIZE, URM_SIZE, 1);
+        play = new UrmButton(playX, y, URM_SIZE, URM_SIZE, 0);
         menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
 
     }
@@ -51,19 +50,12 @@ public class GameOverOverlay {
         g.drawImage(img, imgX, imgY, imgW, imgH, null);
 
         menu.draw(g);
-        retry.draw(g);
+        play.draw(g);
     }
 
     public void update() {
         menu.update();
-        retry.update();
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            playing.resetAll();
-            Gamestate.state = Gamestate.MENU;
-        }
+        play.update();
     }
 
     private boolean isIn(UrmButton b, MouseEvent e) {
@@ -71,34 +63,36 @@ public class GameOverOverlay {
     }
 
     public void mouseMoved(MouseEvent e) {
-        retry.setMouseOver(false);
+        play.setMouseOver(false);
         menu.setMouseOver(false);
 
         if (isIn(menu, e))
             menu.setMouseOver(true);
-        else if (isIn(retry, e))
-            retry.setMouseOver(true);
+        else if (isIn(play, e))
+            play.setMouseOver(true);
     }
 
     public void mouseReleased(MouseEvent e) {
         if (isIn(menu, e)) {
             if (menu.isMousePressed()) {
                 playing.resetAll();
-                Gamestate.state = Gamestate.MENU;
+                playing.setGamestate(Gamestate.MENU);
             }
-        } else if (isIn(retry, e))
-            if (retry.isMousePressed())
+        } else if (isIn(play, e))
+            if (play.isMousePressed()) {
                 playing.resetAll();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+            }
 
         menu.resetBools();
-        retry.resetBools();
+        play.resetBools();
     }
 
     public void mousePressed(MouseEvent e) {
         if (isIn(menu, e))
             menu.setMousePressed(true);
-        else if (isIn(retry, e))
-            retry.setMousePressed(true);
+        else if (isIn(play, e))
+            play.setMousePressed(true);
     }
 
 }

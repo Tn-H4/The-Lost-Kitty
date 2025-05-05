@@ -1,28 +1,31 @@
 package levels;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Mantis;
 import entities.Ant;
 import main.Game;
 import objects.Bee;
 import objects.Fish;
 import objects.Vines;
-import utilz.HelpMethods;
 
-import static utilz.HelpMethods.GetLevelData;
-import static utilz.HelpMethods.GetAnts;
-import static utilz.HelpMethods.GetPlayerSpawn;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.ObjectConstants.*;
 
 public class Level {
 
 	private BufferedImage img;
 	private int[][] lvlData;
-	private ArrayList<Ant> ants;
-	private ArrayList<Fish> fish;
-	private ArrayList<Vines> vines;
-	private ArrayList<Bee> bees;
+
+	private ArrayList<Mantis> mantis = new ArrayList<>();
+	private ArrayList<Ant> ants = new ArrayList<>();
+	private ArrayList<Fish> fishes = new ArrayList<>();
+	private ArrayList<Vines> vines = new ArrayList<>();
+	private ArrayList<Bee> bees = new ArrayList<>();
+
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
@@ -30,43 +33,57 @@ public class Level {
 
 	public Level(BufferedImage img) {
 		this.img = img;
-		createLevelData();
-		createEnemies();
-		createPotions();
-		createSpikes();
-		createCannons();
+		lvlData = new int[img.getHeight()][img.getWidth()];
+		loadLevel();
 		calcLvlOffsets();
-		calcPlayerSpawn();
 	}
 
-	private void createCannons() {
-		bees = HelpMethods.GetBees(img);
+	private void loadLevel() {
+
+		for (int y = 0; y < img.getHeight(); y++)
+			for (int x = 0; x < img.getWidth(); x++) {
+				Color c = new Color(img.getRGB(x, y));
+				int red = c.getRed();
+				int green = c.getGreen();
+				int blue = c.getBlue();
+
+				loadLevelData(red, x, y);
+				loadEntities(green, x, y);
+				loadObjects(blue, x, y);
+			}
 	}
 
-	private void createSpikes() {
-		vines = HelpMethods.GetVine(img);
+	private void loadLevelData(int redValue, int x, int y) {
+		if (redValue >= 50)
+			lvlData[y][x] = 0;
+		else
+			lvlData[y][x] = redValue;
 	}
 
-	private void createPotions() {
-		fish = HelpMethods.GetFishes(img);
+	private int getRndGrassType(int xPos) {
+		return xPos % 2;
 	}
 
-	private void calcPlayerSpawn() {
-		playerSpawn = GetPlayerSpawn(img);
+	private void loadEntities(int greenValue, int x, int y) {
+		switch (greenValue) {
+			case MANTIS -> mantis.add(new Mantis(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+			case ANT -> ants.add(new Ant(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+			case 100 -> playerSpawn = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
+		}
+	}
+
+	private void loadObjects(int blueValue, int x, int y) {
+		switch (blueValue) {
+			case FISH-> fishes.add(new Fish(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+			case SPIKE -> vines.add(new Vines(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
+			case BEE_LEFT, BEE_RIGHT -> bees.add(new Bee(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+		}
 	}
 
 	private void calcLvlOffsets() {
 		lvlTilesWide = img.getWidth();
 		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
 		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
-	}
-
-	private void createEnemies() {
-		ants = GetAnts(img);
-	}
-
-	private void createLevelData() {
-		lvlData = GetLevelData(img);
 	}
 
 	public int getSpriteIndex(int x, int y) {
@@ -81,25 +98,27 @@ public class Level {
 		return maxLvlOffsetX;
 	}
 
-	public ArrayList<Ant> getAnts() {
-		return ants;
-	}
-
 	public Point getPlayerSpawn() {
 		return playerSpawn;
 	}
 
-	public ArrayList<Fish> getPotions() {
-		return fish;
+	public ArrayList<Mantis> getMantis() {
+		return mantis;
 	}
 
+	public ArrayList<Ant> getAnts() {
+		return ants;
+	}
 
-	public ArrayList<Vines> getSpikes() {
+	public ArrayList<Fish> getFishes() {
+		return fishes;
+	}
+
+	public ArrayList<Vines> getVines() {
 		return vines;
 	}
 
-	public ArrayList<Bee> getCannons(){
+	public ArrayList<Bee> getBees() {
 		return bees;
 	}
-
 }

@@ -27,9 +27,9 @@ public class EnemyManager {
 
     public void update(int[][] lvlData, Player player) {
         boolean isAnyActive = false;
-        for (Ant c : ants)
-            if (c.isActive()) {
-                c.update(lvlData, player);
+        for (Ant a : ants)
+            if (a.isActive()) {
+                a.update(lvlData, player);
                 isAnyActive = true;
             }
         if (!isAnyActive)
@@ -41,14 +41,14 @@ public class EnemyManager {
     }
 
     private void drawAnt(Graphics g, int xLvlOffset) {
-        for (Ant c : ants)
-            if (c.isActive()) {
+        for (Ant a : ants)
+            if (a.isActive()) {
 
-                g.drawImage(antArr[c.getState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ANT_DRAWOFFSET_X + c.flipX(), (int) c.getHitbox().y - ANT_DRAWOFFSET_Y,
-                        ANT_WIDTH * c.flipW(), ANT_HEIGHT, null);
+                g.drawImage(antArr[a.getState()][a.getAniIndex()], (int) a.getHitbox().x - xLvlOffset - ANT_DRAWOFFSET_X + a.flipX(), (int) a.getHitbox().y - ANT_DRAWOFFSET_Y,
+                        ANT_WIDTH * a.flipW(), ANT_HEIGHT, null);
 
-                c.drawHitbox(g, xLvlOffset);
-                c.drawAttackBox(g, xLvlOffset);
+                a.drawHitbox(g, xLvlOffset);
+                a.drawAttackBox(g, xLvlOffset);
             }
 
     }
@@ -63,7 +63,7 @@ public class EnemyManager {
     }
 
     private void loadEnemyImgs() {
-        antArr = new BufferedImage[3][5];
+        antArr = new BufferedImage[4][5];
         BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ANT_SPRITE);
         for (int j = 0; j < antArr.length; j++)
             for (int i = 0; i < antArr[j].length; i++)

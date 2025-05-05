@@ -13,7 +13,6 @@ public class Menu extends State implements Statemethods {
 
     private MenuButton[] buttons = new MenuButton[3];
     private BufferedImage backgroundImg;
-    private int menuX, menuY, menuWidth, menuHeight;
 
     public Menu(Game game) {
         super(game);
@@ -61,10 +60,11 @@ public class Menu extends State implements Statemethods {
             if (isIn(e, mb)) {
                 if (mb.isMousePressed())
                     mb.applyGamestate();
+                if (mb.getState() == Gamestate.PLAYING)
+                    game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
                 break;
             }
         }
-
         resetButtons();
     }
 
@@ -87,8 +87,7 @@ public class Menu extends State implements Statemethods {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-            Gamestate.state = Gamestate.PLAYING;
+
     }
 
     @Override
