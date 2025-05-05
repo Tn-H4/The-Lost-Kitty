@@ -269,10 +269,6 @@ public class Player extends Entity {
 		currentHealth = 0;
 	}
 
-	public void changePower(int value) {
-		System.out.println("Added power!");
-	}
-
 	private void loadAnimations() {
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_SPRITE);
 		animations = new BufferedImage[7][6];

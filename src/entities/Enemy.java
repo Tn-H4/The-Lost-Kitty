@@ -98,7 +98,7 @@ public abstract class Enemy extends Entity {
 
     public void hurt(int amount) {
         currentHealth -= amount;
-        if (currentHealth <= 0)
+//        if (currentHealth <= 0)
             newState(DEAD);
 //        else
 //            newState(HIT);
@@ -111,7 +111,7 @@ public abstract class Enemy extends Entity {
 
     }
 
-    protected void updateAnimationTick() {
+    protected void updateAnimationTick(int enemy_type) {
         aniTick++;
         if (aniTick >= ANI_SPEED) {
             aniTick = 0;
@@ -120,9 +120,10 @@ public abstract class Enemy extends Entity {
                 aniIndex = 0;
 
                 switch (state) {
-//                    case ATTACK, HIT -> state = RUNNING;
+//                    case ATTACK -> state = IDLE;
                     case DEAD -> active = false;
                 }
+
             }
         }
     }
@@ -139,7 +140,7 @@ public abstract class Enemy extends Entity {
         hitbox.y = y;
         firstUpdate = true;
         currentHealth = maxHealth;
-        newState(RUNNING);
+        newState(IDLE);
         active = true;
         airSpeed = 0;
     }

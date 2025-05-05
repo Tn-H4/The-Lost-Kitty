@@ -63,7 +63,7 @@ public class EnemyManager {
     }
 
     private void loadEnemyImgs() {
-        antArr = new BufferedImage[2][5];
+        antArr = new BufferedImage[3][5];
         BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ANT_SPRITE);
         for (int j = 0; j < antArr.length; j++)
             for (int i = 0; i < antArr[j].length; i++)

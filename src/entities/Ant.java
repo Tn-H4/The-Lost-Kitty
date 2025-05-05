@@ -25,7 +25,7 @@ public class Ant extends Enemy {
 
     public void update(int[][] lvlData, Player player) {
         updateBehavior(lvlData, player);
-        updateAnimationTick();
+        updateAnimationTick(ANT);
         updateAttackBox();
     }
 
@@ -42,6 +42,8 @@ public class Ant extends Enemy {
             updateInAir(lvlData);
         else {
             switch (state) {
+                case IDLE:
+                    newState(RUNNING);
                 case RUNNING:
                     move(lvlData);
                     if (isPlayerCloseForAttack(player))

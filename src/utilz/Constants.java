@@ -53,8 +53,11 @@ public class Constants {
 	public static class EnemyConstants {
 		public static final int ANT = 0;
 
-		public static final int RUNNING = 0;
-		public static final int DEAD = 1;
+		public static final int IDLE = 0;
+		public static final int RUNNING = 1;
+//		public static final int ATTACK = 2;
+//		public static final int HIT = 3;
+		public static final int DEAD = 2;
 
 		public static final int ANT_WIDTH_DEFAULT = 72;
 		public static final int ANT_HEIGHT_DEFAULT = 32;
@@ -140,7 +143,7 @@ public class Constants {
 			public static final int FALLING = 3;
 			public static final int ATTACK = 4;
 			public static final int HIT = 5;
-			public static final int DEAD = 7;
+			public static final int DEAD = 6;
 
 
 			public static int GetSpriteAmount(int player_action) {
