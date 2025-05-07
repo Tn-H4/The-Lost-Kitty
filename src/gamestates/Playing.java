@@ -51,10 +51,6 @@ public class Playing extends State implements Statemethods {
         loadStartLevel();
     }
 
-    public void resetGameCompleted() {
-        gameCompleted = false;
-    }
-
     public void loadNextLevel() {
         levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
         levelManager.loadNextLevel();
@@ -83,6 +79,7 @@ public class Playing extends State implements Statemethods {
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
         levelCompletedOverlay = new LevelCompletedOverlay(this);
+        gameCompletedOverlay = new GameCompletedOverlay(this);
     }
 
     @Override
@@ -98,10 +95,9 @@ public class Playing extends State implements Statemethods {
         else if (playerDying)
             player.update();
         else {
-            levelManager.update();
             objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             player.update();
-            enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
+            enemyManager.update(levelManager.getCurrentLevel().getLevelData());
             checkCloseToBorder();
         }
     }
@@ -137,6 +133,10 @@ public class Playing extends State implements Statemethods {
             levelCompletedOverlay.draw(g);
         else if (gameCompleted)
             gameCompletedOverlay.draw(g);
+    }
+
+    public void resetGameCompleted() {
+        gameCompleted = false;
     }
 
     public void resetAll() {
@@ -251,7 +251,7 @@ public class Playing extends State implements Statemethods {
     }
 
     public void setLevelCompleted(boolean levelCompleted) {
-//		game.getAudioPlayer().lvlCompleted();
+		game.getAudioPlayer().lvlCompleted();
         if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
             // No more levels
             gameCompleted = true;

@@ -12,7 +12,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private int lvlIndex = 0, aniTick, aniIndex;
+	private int lvlIndex = 0;
 
 	public LevelManager(Game game) {
 		this.game = game;
@@ -54,21 +54,6 @@ public class LevelManager {
 
 				g.drawImage(levelSprite[index], x, y, Game.TILES_SIZE, Game.TILES_SIZE, null);
 			}
-	}
-
-	public void update() {
-		updateWaterAnimation();
-	}
-
-	private void updateWaterAnimation() {
-		aniTick++;
-		if (aniTick >= 40) {
-			aniTick = 0;
-			aniIndex++;
-
-			if (aniIndex >= 4)
-				aniIndex = 0;
-		}
 	}
 
 	public Level getCurrentLevel() {

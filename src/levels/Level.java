@@ -60,10 +60,6 @@ public class Level {
 			lvlData[y][x] = redValue;
 	}
 
-	private int getRndGrassType(int xPos) {
-		return xPos % 2;
-	}
-
 	private void loadEntities(int greenValue, int x, int y) {
 		switch (greenValue) {
 			case MANTIS -> mantis.add(new Mantis(x * Game.TILES_SIZE, y * Game.TILES_SIZE));

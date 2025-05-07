@@ -1,16 +1,11 @@
 package entities;
 
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.HelpMethods.IsFloor;
 
-import java.awt.geom.Rectangle2D;
-
-import static utilz.Constants.Directions.*;
-
-import main.Game;
+import gamestates.Playing;
 //Ant function: hit when the player go through it
 public class Ant extends Enemy {
-
-    private int attackBoxOffsetX, hitboxOffsetX;
 
     public Ant(float x, float y) {
         super(x, y, ANT_WIDTH, ANT_HEIGHT, ANT);
@@ -18,52 +13,44 @@ public class Ant extends Enemy {
         initAttackBox(42, 19, 30);
     }
 
-    public void update(int[][] lvlData, Player player) {
-        updateBehavior(lvlData, player);
+    public void update(int[][] lvlData, Playing playing) {
+        updateBehavior(lvlData, playing);
         updateAnimationTick();
         updateAttackBox();
+        updateAttackBoxFlip();
     }
 
-    private void updateBehavior(int[][] lvlData, Player player) {
+    private void updateBehavior(int[][] lvlData, Playing playing) {
         if (firstUpdate)
             firstUpdateCheck(lvlData);
 
-        if (inAir)
-            updateInAir(lvlData);
-        else {
+        if (inAir) {
+            inAirChecks(lvlData, playing);
+        } else {
             switch (state) {
                 case IDLE:
-                    newState(RUNNING);
-                case RUNNING:
+                    if (IsFloor(hitbox, lvlData))
+                        newState(RUNNING);
+                    else
+                        inAir = true;
+                    break;
 
-                        if (isPlayerCloseForAttack(player))
-                            newState(ATTACK);
+                case RUNNING:
+                    if (isPlayerCloseForAttack(playing.getPlayer()))
+                        newState(ATTACK);
 
                     move(lvlData);
                     break;
+
                 case ATTACK:
                     if (aniIndex == 0)
                         attackChecked = false;
                     if (aniIndex == 1 && !attackChecked)
-                        checkPlayerHit(attackBox, player);
+                        checkPlayerHit(attackBox, playing.getPlayer());
                     break;
                 case DEAD:
                     break;
             }
         }
-    }
-
-    public int flipX() {
-        if (walkDir == RIGHT)
-            return width;
-        else
-            return 0;
-    }
-
-    public int flipW() {
-        if (walkDir == RIGHT)
-            return -1;
-        else
-            return 1;
     }
 }

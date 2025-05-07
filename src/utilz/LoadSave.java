@@ -30,7 +30,7 @@ public class LoadSave {
 	public static final String STING_IMG = "Sting.png";
 	public static final String DEATH_SCREEN = "DeathScreen.png";
 	public static final String OPTIONS_MENU = "OptionMenu.png";
-	public static final String GAME_COMPLETED = "GameCompleted";
+	public static final String GAME_COMPLETED = "GameCompleted.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

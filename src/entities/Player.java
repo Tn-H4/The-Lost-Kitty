@@ -71,7 +71,8 @@ public class Player extends Entity {
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE), (int) (20 * Game.SCALE));
+		resetAttackBox();
 	}
 
 	public void update() {
@@ -144,6 +145,7 @@ public class Player extends Entity {
 		if (attackChecked || aniIndex != 1)
 			return;
 		attackChecked = true;
+
 		playing.checkEnemyHit(attackBox);
 		playing.getGame().getAudioPlayer().playAttackSound();
 	}
@@ -165,6 +167,10 @@ public class Player extends Entity {
 			}
 
 		}
+		else if (right)
+			setAttackBoxOnRightSide();
+		else if (left)
+			setAttackBoxOnLeftSide();
 
 		attackBox.y = hitbox.y + (Game.SCALE * 10);
 	}

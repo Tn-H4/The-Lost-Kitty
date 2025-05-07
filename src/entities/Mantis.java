@@ -6,7 +6,7 @@ import static utilz.HelpMethods.IsFloor;
 import gamestates.Playing;
 
 public class Mantis extends Enemy {
-
+//Mantis function: can see player and will follow to attack player
     public Mantis(float x, float y) {
         super(x, y, MANTIS_WIDTH, MANTIS_HEIGHT, MANTIS);
         initHitbox(42, 19);
@@ -17,6 +17,7 @@ public class Mantis extends Enemy {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
         updateAttackBox();
+        updateAttackBoxFlip();
     }
 
     private void updateBehavior(int[][] lvlData, Playing playing) {

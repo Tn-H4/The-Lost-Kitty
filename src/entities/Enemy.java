@@ -124,26 +124,18 @@ public abstract class Enemy extends Entity {
     }
 
     public void hurt(int amount) {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+//        currentHealth -= amount;
+//        if (currentHealth <= 0)
             newState(DEAD);
-        else {
-            if (walkDir == LEFT)
-                pushBackDir = RIGHT;
-            else
-                pushBackDir = LEFT;
-            pushBackOffsetDir = UP;
-            pushDrawOffset = 0;
-        }
     }
 
     protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
         if (attackBox.intersects(player.hitbox))
             player.changeHealth(-GetEnemyDmg(enemyType), this);
-        else {
-            if (enemyType == ANT)
-                return;
-        }
+//        else {
+//            if (enemyType == ANT)
+//                return;
+//        }
         attackChecked = true;
     }
 
@@ -202,10 +194,6 @@ public abstract class Enemy extends Entity {
 
     public boolean isActive() {
         return active;
-    }
-
-    public float getPushDrawOffset() {
-        return pushDrawOffset;
     }
 
 }
