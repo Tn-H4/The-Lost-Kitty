@@ -251,7 +251,7 @@ public class Playing extends State implements Statemethods {
     }
 
     public void setLevelCompleted(boolean levelCompleted) {
-//		game.getAudioPlayer().lvlCompleted();
+		game.getAudioPlayer().lvlCompleted();
         if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
             // No more levels
             gameCompleted = true;
