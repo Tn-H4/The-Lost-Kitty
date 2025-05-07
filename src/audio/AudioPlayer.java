@@ -14,7 +14,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioPlayer {
 
-    public static int MENU_1 = 0;
+    public static int MENU = 0;
     public static int LEVEL_1 = 1;
     public static int LEVEL_2 = 2;
 
@@ -35,7 +35,7 @@ public class AudioPlayer {
     public AudioPlayer() {
         loadSongs();
         loadEffects();
-        playSong(MENU_1);
+        playSong(MENU);
     }
 
     private void loadSongs() {
