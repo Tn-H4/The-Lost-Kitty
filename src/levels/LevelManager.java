@@ -1,6 +1,7 @@
 package levels;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,7 +14,11 @@ public class LevelManager {
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
 	private int lvlIndex = 0;
-
+	//
+	private Rectangle2D.Float entranceZone;
+	private BufferedImage fishEntrance;
+	private int xLvlOffset;
+	//
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
@@ -53,6 +58,15 @@ public class LevelManager {
 				int y = Game.TILES_SIZE * j;
 
 				g.drawImage(levelSprite[index], x, y, Game.TILES_SIZE, Game.TILES_SIZE, null);
+				if (entranceZone != null && fishEntrance != null) {
+					g.drawImage(fishEntrance,
+							(int)(entranceZone.x - xLvlOffset),
+							(int)entranceZone.y,
+							Game.TILES_SIZE,
+							Game.TILES_SIZE,
+							null
+					);
+				}
 			}
 	}
 

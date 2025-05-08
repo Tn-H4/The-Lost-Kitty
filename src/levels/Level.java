@@ -2,6 +2,7 @@ package levels;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import main.Game;
 import objects.Bee;
 import objects.Fish;
 import objects.Vines;
+import utilz.HelpMethods;
 
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.ObjectConstants.*;
@@ -30,6 +32,8 @@ public class Level {
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
 	private Point playerSpawn;
+
+	private Rectangle2D.Float entrance;
 
 	public Level(BufferedImage img) {
 		this.img = img;
@@ -81,7 +85,9 @@ public class Level {
 		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
 		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
 	}
-
+	public Rectangle2D.Float getEntrance() {
+		return HelpMethods.GetLevelEntrance(img);
+	}
 	public int getSpriteIndex(int x, int y) {
 		return lvlData[y][x];
 	}
@@ -116,5 +122,8 @@ public class Level {
 
 	public ArrayList<Bee> getBees() {
 		return bees;
+	}
+	private void findEntrance() {
+		entrance = HelpMethods.GetLevelEntrance(img);
 	}
 }
