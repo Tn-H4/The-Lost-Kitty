@@ -16,21 +16,22 @@ public class LoadSave {
 	public static final String MENU_BUTTONS = "MenuButton.png";
 	public static final String PAUSE_BACKGROUND = "PauseMenu.png";
 	public static final String SOUND_BUTTONS = "SoundButton.png";
-	public static final String URM_BUTTONS = "GreenButton.png";
+	public static final String GREEN_BUTTONS = "GreenButton.png";
 	public static final String VOLUME_BUTTONS = "VolumeBar.png";
 	public static final String MENU_BACKGROUND = "BackgroundGame.png";
 	public static final String PLAYING_BG_IMG = "BackgroundLevel.png";
 	public static final String ANT_SPRITE = "AntSprite.png";
 	public static final String MANTIS_SPRITE = "MantisSprite.png";
-	public static final String STATUS_BAR = "HealthBar.png";
+	public static final String HEALTH_BAR = "HealthBar.png";
 	public static final String COMPLETED_IMG = "LevelCompleted.png";
 	public static final String FISH_IMG = "Fish.png";
-	public static final String TRAP_ATLAS = "Vines.png";
-	public static final String BEE_ATLAS = "BeeSprite.png";
+	public static final String TRAP_IMG = "Vines.png";
+	public static final String BEE_IMG = "BeeSprite.png";
 	public static final String STING_IMG = "Sting.png";
 	public static final String DEATH_SCREEN = "DeathScreen.png";
 	public static final String OPTIONS_MENU = "OptionMenu.png";
 	public static final String GAME_COMPLETED = "GameCompleted.png";
+	public static final String ENTRANCE_IMG = "Entrance.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

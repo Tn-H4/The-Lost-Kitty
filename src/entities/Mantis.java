@@ -9,14 +9,13 @@ public class Mantis extends Enemy {
 //Mantis function: can see player and will follow to attack player
     public Mantis(float x, float y) {
         super(x, y, MANTIS_WIDTH, MANTIS_HEIGHT, MANTIS);
-        initHitbox(42, 19);
-        initAttackBox(42, 19, 30);
+        initHitbox(22, 19);
+        initAttackBox(22, 19, 20);
     }
 
     public void update(int[][] lvlData, Playing playing) {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
-        updateAttackBox();
         updateAttackBoxFlip();
     }
 

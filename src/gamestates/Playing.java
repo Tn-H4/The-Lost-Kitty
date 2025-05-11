@@ -28,18 +28,7 @@ public class Playing extends State implements Statemethods {
     private GameCompletedOverlay gameCompletedOverlay;
     private LevelCompletedOverlay levelCompletedOverlay;
     private boolean paused = false;
-//
-private final String[] levelFiles = {
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-};
-    private Rectangle2D.Float entranceZone;
-    private BufferedImage fishEntrance;
 
-    //
     private int xLvlOffset;
     private int leftBorder = (int) (0.25 * Game.GAME_WIDTH);
     private int rightBorder = (int) (0.75 * Game.GAME_WIDTH);
@@ -55,9 +44,7 @@ private final String[] levelFiles = {
     public Playing(Game game) {
         super(game);
         initClasses();
-       //
-        fishEntrance = LoadSave.GetSpriteAtlas("Fish.png");
-        //
+
         backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG);
 
         calcLvlOffset();
@@ -68,14 +55,12 @@ private final String[] levelFiles = {
         levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
         levelManager.loadNextLevel();
         player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
-        entranceZone = levelManager.getCurrentLevel().getEntrance();
         resetAll();
     }
 
     private void loadStartLevel() {
         enemyManager.loadEnemies(levelManager.getCurrentLevel());
         objectManager.loadObjects(levelManager.getCurrentLevel());
-        entranceZone = levelManager.getCurrentLevel().getEntrance();
     }
 
     private void calcLvlOffset() {
@@ -110,10 +95,10 @@ private final String[] levelFiles = {
         else if (playerDying)
             player.update();
         else {
-            if (!lvlCompleted && entranceZone != null && player.getHitbox().intersects(entranceZone)) {
-                lvlCompleted = true;
-                //player.setWin(true); // optional
-            }
+//            if (!lvlCompleted && entranceZone != null && player.getHitbox().intersects(entranceZone)) {
+//                lvlCompleted = true;
+//                //player.setWin(true); // optional
+//            }
             objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData());
@@ -141,15 +126,15 @@ private final String[] levelFiles = {
         objectManager.draw(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
-        if (entranceZone != null && fishEntrance != null) {
-            g.drawImage(fishEntrance,
-                    (int)(entranceZone.x - xLvlOffset),
-                    (int)entranceZone.y,
-                    Game.TILES_SIZE,
-                    Game.TILES_SIZE,
-                    null
-            );
-        }
+//        if (entranceZone != null && fishEntrance != null) {
+//            g.drawImage(fishEntrance,
+//                    (int)(entranceZone.x - xLvlOffset),
+//                    (int)entranceZone.y,
+//                    Game.TILES_SIZE,
+//                    Game.TILES_SIZE,
+//                    null
+//            );
+//        }
         if (paused) {
             g.setColor(new Color(0, 0, 0, 150));
             g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);

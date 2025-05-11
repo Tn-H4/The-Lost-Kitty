@@ -19,12 +19,12 @@ import static utilz.Constants.Sting.*;
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage fishImgs;
+    private BufferedImage fishImg, vinesImg, stingImg, entranceImg;
     private BufferedImage[] beeImgs;
-    private BufferedImage vinesImg, stingImg;
     private ArrayList<Fish> fish;
     private ArrayList<Vines> vines;
     private ArrayList<Bee> bees;
+    private ArrayList<Entrance> entrance;
     private ArrayList<Sting> stings = new ArrayList<>();
 
     private Level currentLevel;
@@ -57,24 +57,36 @@ public class ObjectManager {
             }
     }
 
+    public void checkEntranceTouched(Rectangle2D.Float hitbox) {
+        for (Entrance e : entrance)
+            if (e.isActive()) {
+                if (hitbox.intersects(e.getHitbox())) {
+                    playing.setLevelCompleted(true);
+                }
+            }
+    }
+
     public void applyEffectToPlayer() {
             playing.getPlayer().changeHealth(FISH_VALUE);
     }
 
     public void loadObjects(Level newLevel) {
-        fish = new ArrayList<>(newLevel.getFishes());
+        fish = newLevel.getFishes();
         vines = newLevel.getVines();
         bees = newLevel.getBees();
+        entrance = newLevel.getEntrance();
         stings.clear();
     }
 
     private void loadImgs() {
-        fishImgs = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
+        entranceImg = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
 
-        vinesImg = LoadSave.GetSpriteAtlas(LoadSave.TRAP_ATLAS);
+        fishImg = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
+
+        vinesImg = LoadSave.GetSpriteAtlas(LoadSave.TRAP_IMG);
 
         beeImgs = new BufferedImage[7];
-        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.BEE_ATLAS);
+        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.BEE_IMG);
         for (int i = 0; i < beeImgs.length; i++)
             beeImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
 
@@ -146,6 +158,7 @@ public class ObjectManager {
         drawVines(g, xLvlOffset);
         drawBees(g, xLvlOffset);
         drawSting(g, xLvlOffset);
+        drawEntrance(g, xLvlOffset);
     }
 
     private void drawSting(Graphics g, int xLvlOffset) {
@@ -179,7 +192,15 @@ public class ObjectManager {
     private void drawFishes(Graphics g, int xLvlOffset) {
         for (Fish f : fish)
             if (f.isActive()) {
-                g.drawImage(fishImgs, (int) (f.getHitbox().x - f.getxDrawOffset() - xLvlOffset), (int) (f.getHitbox().y - f.getyDrawOffset()), FISH_WIDTH, FISH_HEIGHT,
+                g.drawImage(fishImg, (int) (f.getHitbox().x - f.getxDrawOffset() - xLvlOffset), (int) (f.getHitbox().y - f.getyDrawOffset()), FISH_WIDTH, FISH_HEIGHT,
+                        null);
+            }
+    }
+
+    private void drawEntrance(Graphics g, int xLvlOffset) {
+        for (Entrance e : entrance)
+            if (e.isActive()) {
+                g.drawImage(entranceImg, (int) (e.getHitbox().x - e.getxDrawOffset() - xLvlOffset), (int) (e.getHitbox().y - e.getyDrawOffset()), ENTRANCE_WIDTH, ENTRANCE_HEIGHT,
                         null);
             }
     }

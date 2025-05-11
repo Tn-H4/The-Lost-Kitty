@@ -2,7 +2,6 @@ package levels;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ import main.Game;
 import objects.Bee;
 import objects.Fish;
 import objects.Vines;
-import utilz.HelpMethods;
+import objects.Entrance;
 
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.ObjectConstants.*;
@@ -27,13 +26,12 @@ public class Level {
 	private ArrayList<Fish> fishes = new ArrayList<>();
 	private ArrayList<Vines> vines = new ArrayList<>();
 	private ArrayList<Bee> bees = new ArrayList<>();
+	private ArrayList<Entrance> entrance = new ArrayList<>();
 
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
 	private Point playerSpawn;
-
-	private Rectangle2D.Float entrance;
 
 	public Level(BufferedImage img) {
 		this.img = img;
@@ -74,7 +72,8 @@ public class Level {
 
 	private void loadObjects(int blueValue, int x, int y) {
 		switch (blueValue) {
-			case FISH-> fishes.add(new Fish(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+			case FISH -> fishes.add(new Fish(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+			case ENTRANCE -> entrance.add(new Entrance(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 			case SPIKE -> vines.add(new Vines(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
 			case BEE_LEFT, BEE_RIGHT -> bees.add(new Bee(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		}
@@ -85,9 +84,9 @@ public class Level {
 		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
 		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
 	}
-	public Rectangle2D.Float getEntrance() {
-		return HelpMethods.GetLevelEntrance(img);
-	}
+//	public Rectangle2D.Float getEntrance() {
+//		return HelpMethods.GetLevelEntrance(img);
+//	}
 	public int getSpriteIndex(int x, int y) {
 		return lvlData[y][x];
 	}
@@ -123,7 +122,12 @@ public class Level {
 	public ArrayList<Bee> getBees() {
 		return bees;
 	}
-	private void findEntrance() {
-		entrance = HelpMethods.GetLevelEntrance(img);
+
+	public ArrayList<Entrance> getEntrance() {
+		return entrance;
 	}
+
+//	private void findEntrance() {
+//		entrance = HelpMethods.GetLevelEntrance(img);
+//	}
 }

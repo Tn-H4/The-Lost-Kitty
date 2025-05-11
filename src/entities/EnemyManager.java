@@ -26,21 +26,21 @@ public class EnemyManager {
     }
 
     public void update(int[][] lvlData) {
-        boolean isAnyActive = false;
+//        boolean isAnyActive = false;
         for (Ant a : currentLevel.getAnts())
             if (a.isActive()) {
                 a.update(lvlData, playing);
-                isAnyActive = true;
+//                isAnyActive = true;
             }
 
         for (Mantis m : currentLevel.getMantis())
             if (m.isActive()) {
                 m.update(lvlData, playing);
-                isAnyActive = true;
+//                isAnyActive = true;
             }
 
-        if (!isAnyActive)
-            playing.setLevelCompleted(true);
+//        if (!isAnyActive)
+//            playing.setLevelCompleted(true);
     }
 
     public void draw(Graphics g, int xLvlOffset) {

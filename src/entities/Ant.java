@@ -9,15 +9,14 @@ public class Ant extends Enemy {
 
     public Ant(float x, float y) {
         super(x, y, ANT_WIDTH, ANT_HEIGHT, ANT);
-        initHitbox(42, 19);
-        initAttackBox(42, 19, 30);
+        initHitbox(22, 19);
+        initAttackBox(42, 19, 10);
     }
 
     public void update(int[][] lvlData, Playing playing) {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
         updateAttackBox();
-        updateAttackBoxFlip();
     }
 
     private void updateBehavior(int[][] lvlData, Playing playing) {

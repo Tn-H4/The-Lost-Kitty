@@ -18,6 +18,7 @@ public class Constants {
 	public static class ObjectConstants {
 
 		public static final int FISH = 0;
+		public static final int ENTRANCE = 1;
 		public static final int SPIKE = 4;
 		public static final int BEE_LEFT = 5;
 		public static final int BEE_RIGHT = 6;
@@ -38,6 +39,11 @@ public class Constants {
 		public static final int BEE_HEIGHT_DEFAULT = 26;
 		public static final int BEE_WIDTH = (int) (BEE_WIDTH_DEFAULT * Game.SCALE);
 		public static final int BEE_HEIGHT = (int) (BEE_HEIGHT_DEFAULT * Game.SCALE);
+
+		public static final int ENTRANCE_WIDTH_DEFAULT = 32;
+		public static final int ENTRANCE_HEIGHT_DEFAULT = 32;
+		public static final int ENTRANCE_WIDTH= (int) (ENTRANCE_WIDTH_DEFAULT * Game.SCALE);
+		public static final int ENTRANCE_HEIGHT = (int) (ENTRANCE_HEIGHT_DEFAULT * Game.SCALE);
 
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {

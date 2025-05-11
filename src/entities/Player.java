@@ -352,7 +352,7 @@ public class Player extends Entity {
 			for (int i = 0; i < animations[j].length; i++)
 				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
 
-		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.STATUS_BAR);
+		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.HEALTH_BAR);
 	}
 
 	public void loadLvlData(int[][] lvlData) {
