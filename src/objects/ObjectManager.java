@@ -79,7 +79,7 @@ public class ObjectManager {
     }
 
     private void loadImgs() {
-        entranceImg = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
+        entranceImg = LoadSave.GetSpriteAtlas(LoadSave.ENTRANCE_IMG);
 
         fishImg = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
 
@@ -97,6 +97,10 @@ public class ObjectManager {
         for (Fish f : fish)
             if (f.isActive())
                 f.update();
+
+        for (Entrance e : entrance)
+            if (e.isActive())
+                e.update();
 
         updateBee(lvlData, player);
         updateSting(lvlData, player);

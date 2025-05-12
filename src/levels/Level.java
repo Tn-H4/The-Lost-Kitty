@@ -84,9 +84,7 @@ public class Level {
 		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
 		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
 	}
-//	public Rectangle2D.Float getEntrance() {
-//		return HelpMethods.GetLevelEntrance(img);
-//	}
+
 	public int getSpriteIndex(int x, int y) {
 		return lvlData[y][x];
 	}
@@ -127,7 +125,4 @@ public class Level {
 		return entrance;
 	}
 
-//	private void findEntrance() {
-//		entrance = HelpMethods.GetLevelEntrance(img);
-//	}
 }

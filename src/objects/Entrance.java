@@ -12,10 +12,10 @@ public class Entrance extends GameObject {
 
         initHitbox(32, 32);
 
-        xDrawOffset = 0;
-        yDrawOffset = (int)(Game.SCALE * 16);
+        xDrawOffset = (int) (3 * Game.SCALE);
+        yDrawOffset = (int) (5 * Game.SCALE);
 
-        maxHoverOffset = (int) (10 * Game.SCALE);
+        maxHoverOffset = (int) (5 * Game.SCALE);
     }
 
     public void update() {

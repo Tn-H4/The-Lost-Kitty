@@ -95,10 +95,7 @@ public class Playing extends State implements Statemethods {
         else if (playerDying)
             player.update();
         else {
-//            if (!lvlCompleted && entranceZone != null && player.getHitbox().intersects(entranceZone)) {
-//                lvlCompleted = true;
-//                //player.setWin(true); // optional
-//            }
+
             objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData());
@@ -126,15 +123,7 @@ public class Playing extends State implements Statemethods {
         objectManager.draw(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
-//        if (entranceZone != null && fishEntrance != null) {
-//            g.drawImage(fishEntrance,
-//                    (int)(entranceZone.x - xLvlOffset),
-//                    (int)entranceZone.y,
-//                    Game.TILES_SIZE,
-//                    Game.TILES_SIZE,
-//                    null
-//            );
-//        }
+
         if (paused) {
             g.setColor(new Color(0, 0, 0, 150));
             g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
@@ -177,6 +166,10 @@ public class Playing extends State implements Statemethods {
 
     public void checkVinesTouched(Player p) {
         objectManager.checkVinesTouched(p);
+    }
+
+    public void checkEntranceTouched(Rectangle2D.Float hitbox) {
+        objectManager.checkEntranceTouched(hitbox);
     }
 
     @Override
