@@ -11,6 +11,7 @@ import gamestates.Playing;
 import levels.Level;
 import main.Game;
 import utilz.LoadSave;
+
 import static utilz.Constants.ObjectConstants.*;
 import static utilz.HelpMethods.CanBeeSeePlayer;
 import static utilz.HelpMethods.IsStingHittingLevel;
@@ -19,12 +20,10 @@ import static utilz.Constants.Sting.*;
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage fishImg, vinesImg, stingImg, entranceImg;
+    private BufferedImage fishImg, vinesImg, stingImg, entranceImg, treeImg, brushImg;
     private BufferedImage[] beeImgs;
     private ArrayList<Fish> fish;
-    private ArrayList<Vines> vines;
     private ArrayList<Bee> bees;
-    private ArrayList<Entrance> entrance;
     private ArrayList<Sting> stings = new ArrayList<>();
 
     private Level currentLevel;
@@ -36,7 +35,7 @@ public class ObjectManager {
     }
 
     public void checkVinesTouched(Player p) {
-        for (Vines v : vines)
+        for (Vines v : currentLevel.getVines())
             if (v.getHitbox().intersects(p.getHitbox()))
                 p.kill();
     }
@@ -58,7 +57,7 @@ public class ObjectManager {
     }
 
     public void checkEntranceTouched(Rectangle2D.Float hitbox) {
-        for (Entrance e : entrance)
+        for (Entrance e : currentLevel.getEntrance())
             if (e.isActive()) {
                 if (hitbox.intersects(e.getHitbox())) {
                     playing.setLevelCompleted(true);
@@ -71,10 +70,10 @@ public class ObjectManager {
     }
 
     public void loadObjects(Level newLevel) {
-        fish = newLevel.getFishes();
-        vines = newLevel.getVines();
+        currentLevel = newLevel;
+        fish = new ArrayList<>(newLevel.getFishes());
         bees = newLevel.getBees();
-        entrance = newLevel.getEntrance();
+
         stings.clear();
     }
 
@@ -84,6 +83,10 @@ public class ObjectManager {
         fishImg = LoadSave.GetSpriteAtlas(LoadSave.FISH_IMG);
 
         vinesImg = LoadSave.GetSpriteAtlas(LoadSave.TRAP_IMG);
+
+        treeImg = LoadSave.GetSpriteAtlas(LoadSave.TREE_IMG);
+
+        brushImg = LoadSave.GetSpriteAtlas(LoadSave.BRUSH_IMG);
 
         beeImgs = new BufferedImage[7];
         BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.BEE_IMG);
@@ -98,7 +101,7 @@ public class ObjectManager {
             if (f.isActive())
                 f.update();
 
-        for (Entrance e : entrance)
+        for (Entrance e : currentLevel.getEntrance())
             if (e.isActive())
                 e.update();
 
@@ -123,12 +126,12 @@ public class ObjectManager {
         return absValue <= Game.TILES_SIZE * 5;
     }
 
-    private boolean isPlayerInfrontOfBee(Bee c, Player player) {
-        if (c.getObjType() == BEE_LEFT) {
-            if (c.getHitbox().x > player.getHitbox().x)
+    private boolean isPlayerInfrontOfBee(Bee b, Player player) {
+        if (b.getObjType() == BEE_LEFT) {
+            if (b.getHitbox().x > player.getHitbox().x)
                 return true;
 
-        } else if (c.getHitbox().x < player.getHitbox().x)
+        } else if (b.getHitbox().x < player.getHitbox().x)
             return true;
         return false;
     }
@@ -144,17 +147,16 @@ public class ObjectManager {
 
             b.update();
             if (b.getAniIndex() == 4 && b.getAniTick() == 0)
-                shootBee(b);
+                shootSting(b);
         }
     }
 
-    private void shootBee(Bee c) {
+    private void shootSting(Bee c) {
         int dir = 1;
         if (c.getObjType() == BEE_LEFT)
             dir = -1;
 
         stings.add(new Sting((int) c.getHitbox().x, (int) c.getHitbox().y, dir));
-
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -162,7 +164,19 @@ public class ObjectManager {
         drawVines(g, xLvlOffset);
         drawBees(g, xLvlOffset);
         drawSting(g, xLvlOffset);
+        drawBrush(g, xLvlOffset);
+        drawTree(g, xLvlOffset);
         drawEntrance(g, xLvlOffset);
+    }
+
+    public void drawTree(Graphics g, int xLvlOffset) {
+        for (Tree tree : currentLevel.getTrees())
+            g.drawImage(treeImg, tree.getX() - xLvlOffset + TREE_OFFSET_X, tree.getY() + TREE_OFFSET_Y, TREE_WIDTH, TREE_HEIGHT, null);
+    }
+
+    private void drawBrush(Graphics g, int xLvlOffset) {
+        for (Brush brush : currentLevel.getBrushes())
+            g.drawImage(brushImg, brush.getX() - xLvlOffset, brush.getY(), (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), null);
     }
 
     private void drawSting(Graphics g, int xLvlOffset) {
@@ -188,7 +202,7 @@ public class ObjectManager {
     }
 
     private void drawVines(Graphics g, int xLvlOffset) {
-        for (Vines v : vines)
+        for (Vines v : currentLevel.getVines())
             g.drawImage(vinesImg, (int) (v.getHitbox().x - xLvlOffset), (int) (v.getHitbox().y - v.getyDrawOffset()), VINE_WIDTH, VINE_HEIGHT, null);
 
     }
@@ -202,7 +216,7 @@ public class ObjectManager {
     }
 
     private void drawEntrance(Graphics g, int xLvlOffset) {
-        for (Entrance e : entrance)
+        for (Entrance e : currentLevel.getEntrance())
             if (e.isActive()) {
                 g.drawImage(entranceImg, (int) (e.getHitbox().x - e.getxDrawOffset() - xLvlOffset), (int) (e.getHitbox().y - e.getyDrawOffset()), ENTRANCE_WIDTH, ENTRANCE_HEIGHT,
                         null);

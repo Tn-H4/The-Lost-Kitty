@@ -123,6 +123,7 @@ public class Playing extends State implements Statemethods {
         objectManager.draw(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
+        objectManager.drawTree(g, xLvlOffset);
 
         if (paused) {
             g.setColor(new Color(0, 0, 0, 150));

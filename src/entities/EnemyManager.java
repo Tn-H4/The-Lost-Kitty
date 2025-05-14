@@ -26,21 +26,15 @@ public class EnemyManager {
     }
 
     public void update(int[][] lvlData) {
-//        boolean isAnyActive = false;
         for (Ant a : currentLevel.getAnts())
             if (a.isActive()) {
                 a.update(lvlData, playing);
-//                isAnyActive = true;
             }
 
         for (Mantis m : currentLevel.getMantis())
             if (m.isActive()) {
                 m.update(lvlData, playing);
-//                isAnyActive = true;
             }
-
-//        if (!isAnyActive)
-//            playing.setLevelCompleted(true);
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -87,15 +81,6 @@ public class EnemyManager {
                         return;
                         }
     }
-
-
-//    private void loadEnemyImgs() {
-//        antArr = new BufferedImage[4][5];
-//        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ANT_SPRITE);
-//        for (int j = 0; j < antArr.length; j++)
-//            for (int i = 0; i < antArr[j].length; i++)
-//                antArr[j][i] = temp.getSubimage(i * ANT_WIDTH_DEFAULT, j * ANT_HEIGHT_DEFAULT, ANT_WIDTH_DEFAULT, ANT_HEIGHT_DEFAULT);
-//    }
 
     private void loadEnemyImgs() {
         mantisArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.MANTIS_SPRITE), 7, 4, MANTIS_WIDTH_DEFAULT, MANTIS_HEIGHT_DEFAULT);

@@ -32,6 +32,8 @@ public class LoadSave {
 	public static final String OPTIONS_MENU = "OptionMenu.png";
 	public static final String GAME_COMPLETED = "GameCompleted.png";
 	public static final String ENTRANCE_IMG = "Entrance.png";
+	public static final String TREE_IMG = "Tree.png";
+	public static final String BRUSH_IMG = "Brush.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

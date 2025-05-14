@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import entities.Mantis;
 import entities.Ant;
 import main.Game;
-import objects.Bee;
-import objects.Fish;
-import objects.Vines;
-import objects.Entrance;
+import objects.*;
 
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.ObjectConstants.*;
@@ -27,6 +24,8 @@ public class Level {
 	private ArrayList<Vines> vines = new ArrayList<>();
 	private ArrayList<Bee> bees = new ArrayList<>();
 	private ArrayList<Entrance> entrance = new ArrayList<>();
+	private ArrayList<Tree> trees = new ArrayList<>();
+	private ArrayList<Brush> brushes = new ArrayList<>();
 
 	private int lvlTilesWide;
 	private int maxTilesOffset;
@@ -60,6 +59,10 @@ public class Level {
 			lvlData[y][x] = 0;
 		else
 			lvlData[y][x] = redValue;
+
+		switch (redValue) {
+			case 30, 31 -> brushes.add(new Brush((int) (x * Game.TILES_SIZE), (int) (y * Game.TILES_SIZE) - Game.TILES_SIZE));
+		}
 	}
 
 	private void loadEntities(int greenValue, int x, int y) {
@@ -76,6 +79,7 @@ public class Level {
 			case ENTRANCE -> entrance.add(new Entrance(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 			case SPIKE -> vines.add(new Vines(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
 			case BEE_LEFT, BEE_RIGHT -> bees.add(new Bee(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+			case TREE -> trees.add(new Tree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		}
 	}
 
@@ -119,6 +123,14 @@ public class Level {
 
 	public ArrayList<Bee> getBees() {
 		return bees;
+	}
+
+	public ArrayList<Tree> getTrees() {
+		return trees;
+	}
+
+	public ArrayList<Brush> getBrushes() {
+		return brushes;
 	}
 
 	public ArrayList<Entrance> getEntrance() {

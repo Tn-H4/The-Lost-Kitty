@@ -34,12 +34,6 @@ public class HelpMethods {
 		return IsSolid(p.getHitbox().x + p.getHitbox().width / 2, p.getHitbox().y + p.getHitbox().height / 2, lvlData);
 	}
 
-	private static int GetTileValue(float xPos, float yPos, int[][] lvlData) {
-		int xCord = (int) (xPos / Game.TILES_SIZE);
-		int yCord = (int) (yPos / Game.TILES_SIZE);
-		return lvlData[yCord][xCord];
-	}
-
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
@@ -138,16 +132,4 @@ public class HelpMethods {
 		else
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 	}
-
-//	public static Rectangle2D.Float GetLevelEntrance(BufferedImage img) {
-//		for (int y = 0; y < img.getHeight(); y++) {
-//			for (int x = 0; x < img.getWidth(); x++) {
-//				Color c = new Color(img.getRGB(x, y));
-//				if (c.getRed() == 11 && c.getGreen() == 240 && c.getBlue() == 150) {
-//					return new Rectangle2D.Float(x * Game.TILES_SIZE, y * Game.TILES_SIZE, Game.TILES_SIZE, Game.TILES_SIZE);
-//				}
-//			}
-//		}
-//		return new Rectangle2D.Float(0, 0, 0, 0);
-//	}
 }

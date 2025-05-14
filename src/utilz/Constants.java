@@ -19,6 +19,7 @@ public class Constants {
 
 		public static final int FISH = 0;
 		public static final int ENTRANCE = 1;
+		public static final int TREE = 2;
 		public static final int SPIKE = 4;
 		public static final int BEE_LEFT = 5;
 		public static final int BEE_RIGHT = 6;
@@ -44,6 +45,13 @@ public class Constants {
 		public static final int ENTRANCE_HEIGHT_DEFAULT = 32;
 		public static final int ENTRANCE_WIDTH= (int) (ENTRANCE_WIDTH_DEFAULT * Game.SCALE);
 		public static final int ENTRANCE_HEIGHT = (int) (ENTRANCE_HEIGHT_DEFAULT * Game.SCALE);
+
+		public static final int TREE_WIDTH_DEFAULT = 39;
+		public static final int TREE_HEIGHT_DEFAULT = 62;
+		public static final int TREE_WIDTH= (int) (TREE_WIDTH_DEFAULT * Game.SCALE);
+		public static final int TREE_HEIGHT = (int) (TREE_HEIGHT_DEFAULT * Game.SCALE);
+		public static final int TREE_OFFSET_X = Game.TILES_SIZE/2 - TREE_WIDTH/2;
+		public static final int TREE_OFFSET_Y = Game.TILES_SIZE - TREE_HEIGHT;
 
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {
