@@ -22,8 +22,8 @@ public class Player extends Entity {
 	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int[][] lvlData;
-	private float xDrawOffset = 21 * Game.SCALE;
-	private float yDrawOffset = 4 * Game.SCALE;
+	private float xDrawOffset = 8 * Game.SCALE;
+	private float yDrawOffset = 1 * Game.SCALE;
 
 	// Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
@@ -59,7 +59,7 @@ public class Player extends Entity {
 		this.currentHealth = 35;
 		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();
-		initHitbox(20, 27);
+		initHitbox(25, 27);
 		initAttackBox();
 	}
 
@@ -355,7 +355,7 @@ public class Player extends Entity {
 		animations = new BufferedImage[7][6];
 		for (int j = 0; j < animations.length; j++)
 			for (int i = 0; i < animations[j].length; i++)
-				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+				animations[j][i] = img.getSubimage(i * 32, j * 32, 32, 32);
 
 		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.HEALTH_BAR);
 	}
