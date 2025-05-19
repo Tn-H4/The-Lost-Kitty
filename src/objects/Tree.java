@@ -1,5 +1,4 @@
 package objects;
-
 public class Tree {
     private int x, y, type;
 
@@ -18,9 +17,6 @@ public class Tree {
 
     }
 
-    public int getType() {
-        return type;
-    }
 }
 
 

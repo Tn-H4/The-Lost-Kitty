@@ -20,7 +20,7 @@ public class Constants {
 		public static final int FISH = 0;
 		public static final int ENTRANCE = 1;
 		public static final int TREE = 2;
-		public static final int SPIKE = 4;
+		public static final int VINES = 4;
 		public static final int BEE_LEFT = 5;
 		public static final int BEE_RIGHT = 6;
 

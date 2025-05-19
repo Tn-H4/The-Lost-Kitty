@@ -1,12 +1,11 @@
 package objects;
 
 public class Brush {
-    private int x, y, type;
+    private int x, y;
 
     public Brush (int x, int y) {
         this.x = x;
         this.y = y;
-        this.type = type;
     }
 
     public int getX() {
@@ -15,7 +14,6 @@ public class Brush {
 
     public int getY() {
         return y;
-
     }
 
 }

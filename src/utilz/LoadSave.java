@@ -12,14 +12,12 @@ import javax.imageio.ImageIO;
 public class LoadSave {
 
 	public static final String PLAYER_SPRITE = "PlayerSprite.png";
-	public static final String LEVEL_ATLAS = "Platform.png";
 	public static final String MENU_BUTTONS = "MenuButton.png";
 	public static final String PAUSE_BACKGROUND = "PauseMenu.png";
 	public static final String SOUND_BUTTONS = "SoundButton.png";
 	public static final String GREEN_BUTTONS = "GreenButton.png";
 	public static final String VOLUME_BUTTONS = "VolumeBar.png";
 	public static final String MENU_BACKGROUND = "BackgroundGame.png";
-	public static final String PLAYING_BG_IMG = "BackgroundLevel.png";
 	public static final String ANT_SPRITE = "AntSprite.png";
 	public static final String MANTIS_SPRITE = "MantisSprite.png";
 	public static final String HEALTH_BAR = "HealthBar.png";
@@ -84,4 +82,64 @@ public class LoadSave {
 
 		return imgs;
 	}
+
+	public static BufferedImage[] GetAllBackgrounds() {
+		URL url = LoadSave.class.getResource("/backgrounds");
+		File file = null;
+
+		try {
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		File[] files = file.listFiles();
+		BufferedImage[] backgrounds = new BufferedImage[files.length];
+
+		for (int i = 0; i < backgrounds.length; i++) {
+			for (File f : files) {
+				if (f.getName().equals((i + 1) + ".png")) {
+					try {
+						backgrounds[i] = ImageIO.read(f);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return backgrounds;
+	}
+
+	public static BufferedImage[] GetAllTileAtlases() {
+		URL url = LoadSave.class.getResource("/tile_atlases");
+		File file = null;
+
+		try {
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		File[] files = file.listFiles();
+		File[] filesSorted = new File[files.length];
+
+		for (int i = 0; i < filesSorted.length; i++)
+			for (int j = 0; j < files.length; j++) {
+				if (files[j].getName().equals((i + 1) + ".png"))
+					filesSorted[i] = files[j];
+			}
+
+		BufferedImage[] imgs = new BufferedImage[filesSorted.length];
+
+		for (int i = 0; i < imgs.length; i++)
+			try {
+				imgs[i] = ImageIO.read(filesSorted[i]);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		return imgs;
+	}
+
 }

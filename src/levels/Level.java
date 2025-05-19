@@ -77,7 +77,7 @@ public class Level {
 		switch (blueValue) {
 			case FISH -> fishes.add(new Fish(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 			case ENTRANCE -> entrance.add(new Entrance(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
-			case SPIKE -> vines.add(new Vines(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
+			case VINES -> vines.add(new Vines(x * Game.TILES_SIZE, y * Game.TILES_SIZE, VINES));
 			case BEE_LEFT, BEE_RIGHT -> bees.add(new Bee(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 			case TREE -> trees.add(new Tree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		}

@@ -27,6 +27,8 @@ public class Playing extends State implements Statemethods {
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
     private LevelCompletedOverlay levelCompletedOverlay;
+    private BufferedImage[] levelBackgrounds;
+
     private boolean paused = false;
 
     private int xLvlOffset;
@@ -45,16 +47,24 @@ public class Playing extends State implements Statemethods {
         super(game);
         initClasses();
 
-        backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-
         calcLvlOffset();
         loadStartLevel();
+        levelBackgrounds = LoadSave.GetAllBackgrounds();
+        loadBackgroundForLevel(levelManager.getLevelIndex());
+    }
+
+    private void loadBackgroundForLevel(int levelIndex) {
+        if (levelIndex >= 0 && levelIndex < levelBackgrounds.length)
+            backgroundImg = levelBackgrounds[levelIndex];
+        else
+            backgroundImg = levelBackgrounds[0];
     }
 
     public void loadNextLevel() {
         levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
         levelManager.loadNextLevel();
         player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+        loadBackgroundForLevel(levelManager.getLevelIndex());
         resetAll();
     }
 

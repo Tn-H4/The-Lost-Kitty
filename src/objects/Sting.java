@@ -13,7 +13,7 @@ public class Sting {
 
     public Sting(int x, int y, int dir) {
         int xOffset = (int) (-3 * Game.SCALE);
-        int yOffset = (int) (5 * Game.SCALE);
+        int yOffset = (int) (10 * Game.SCALE);
 
         if (dir == 1)
             xOffset = (int) (29 * Game.SCALE);
