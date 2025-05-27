@@ -66,6 +66,7 @@ public class Constants {
 		public static final int ANT = 0;
 		public static final int MANTIS = 1;
 		public static final int GUIDER = 2;
+		public static final int BOSS = 3;
 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
@@ -94,6 +95,13 @@ public class Constants {
 		public static final int GUIDER_HEIGHT = (int) (GUIDER_HEIGHT_DEFAULT * Game.SCALE * 1.5);
 		public static final int GUIDER_DRAWOFFSET_X = (int) (10 * Game.SCALE);
 		public static final int GUIDER_DRAWOFFSET_Y = (int) (8 * Game.SCALE);
+
+		public static final int BOSS_WIDTH_DEFAULT = 64;
+		public static final int BOSS_HEIGHT_DEFAULT = 40;
+		public static final int BOSS_WIDTH = (int) (BOSS_WIDTH_DEFAULT * Game.SCALE);
+		public static final int BOSS_HEIGHT = (int) (BOSS_HEIGHT_DEFAULT * Game.SCALE);
+		public static final int BOSS_DRAWOFFSET_X = (int) (26 * Game.SCALE);
+		public static final int BOSS_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
 
 		public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 			switch (enemy_state) {
@@ -126,9 +134,9 @@ public class Constants {
 			switch (enemy_type) {
 				case GUIDER:
 					return 1000;
-				case MANTIS:
-				case ANT:
-					return 10;
+//				case MANTIS:
+//				case ANT:
+//					return 10;
 				default:
 					return 1;
 			}
@@ -138,11 +146,10 @@ public class Constants {
 			switch (enemy_type) {
 				case GUIDER:
 					return 1000;
-				case MANTIS:
-				case ANT:
-					return 15;
+				case BOSS:
+					return 50;
 				default:
-					return 0;
+					return 15;
 			}
 		}
 	}

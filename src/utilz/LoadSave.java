@@ -20,6 +20,7 @@ public class LoadSave {
 	public static final String MENU_BACKGROUND = "BackgroundGame.png";
 	public static final String ANT_SPRITE = "AntSprite.png";
 	public static final String MANTIS_SPRITE = "MantisSprite.png";
+	public static final String BOSS_SPRITE = "BossSprite.png";
 	public static final String GUIDER_SPRITE = "GuiderSprite.png";
 	public static final String STATUS_BAR = "Bar.png";
 	public static final String COMPLETED_IMG = "LevelCompleted.png";

@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Boss;
 import entities.Guider;
 import entities.Mantis;
 import entities.Ant;
@@ -22,6 +23,7 @@ public class Level {
 	private ArrayList<Mantis> mantis = new ArrayList<>();
 	private ArrayList<Ant> ants = new ArrayList<>();
 	private ArrayList<Guider> guider = new ArrayList<>();
+	private ArrayList<Boss> boss = new ArrayList<>();
 	private ArrayList<Fish> fishes = new ArrayList<>();
 	private ArrayList<Vines> vines = new ArrayList<>();
 	private ArrayList<Bee> bees = new ArrayList<>();
@@ -72,7 +74,7 @@ public class Level {
 			case MANTIS -> mantis.add(new Mantis(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 			case ANT -> ants.add(new Ant(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 			case GUIDER -> guider.add(new Guider(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-
+			case BOSS -> boss.add(new Boss(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
 			case 100 -> playerSpawn = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
 		}
 	}
@@ -119,6 +121,10 @@ public class Level {
 
 	public ArrayList<Guider> getGuider() {
 		return guider;
+	}
+
+	public ArrayList<Boss> getBoss() {
+		return boss;
 	}
 
 	public ArrayList<Fish> getFishes() {

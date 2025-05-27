@@ -1,6 +1,6 @@
 package entities;
 
-import static utilz.Constants.EnemyConstants.GUIDER;
+import static utilz.Constants.EnemyConstants.*;
 
 public class DialogueManager {
     public static String[] getDialogueForEnemy(int enemy_type) {
@@ -9,13 +9,11 @@ public class DialogueManager {
                     "Welcome to Level 1!",
                     "Use arrow keys to move.",
                     "Press space to jump.",
-                    "Press Z to attack."
+                    "Click to attack."
             };
-//            case 2 -> new String[]{
-//                    "Now you're in Level 2.",
-//                    "Enemies are stronger here.",
-//                    "Be careful!"
-//            };
+            case BOSS -> new String[]{
+                    "Hello"
+            };
             default -> new String[]{"Hello, adventurer!"};
         };
     }

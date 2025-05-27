@@ -116,7 +116,7 @@ public abstract class Enemy extends Entity {
     protected boolean isPlayerCloseForAttack(Player player) {
         int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
         switch (enemyType) {
-            case MANTIS, ANT, GUIDER -> {
+            case MANTIS, ANT, GUIDER, BOSS -> {
                 return absValue <= attackDistance;
             }
         }
@@ -145,7 +145,7 @@ public abstract class Enemy extends Entity {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-                if (enemyType == MANTIS || enemyType == ANT || enemyType == GUIDER) {
+                if (enemyType == MANTIS || enemyType == ANT || enemyType == GUIDER || enemyType == BOSS) {
                     aniIndex = 0;
 
                     switch (state) {
