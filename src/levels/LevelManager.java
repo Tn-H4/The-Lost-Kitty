@@ -12,7 +12,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private int lvlIndex = 0;
+	private static int lvlIndex = 0;
 	private BufferedImage[][] allLevelSprites;
 
 

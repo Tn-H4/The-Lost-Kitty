@@ -13,7 +13,7 @@ import static utilz.Constants.EnemyConstants.*;
 public class EnemyManager {
 
     private Playing playing;
-    private BufferedImage[][] antArr, mantisArr;
+    private BufferedImage[][] antArr, mantisArr, guiderArr;
     private Level currentLevel;
 
     public EnemyManager(Playing playing) {
@@ -35,11 +35,17 @@ public class EnemyManager {
             if (m.isActive()) {
                 m.update(lvlData, playing);
             }
+
+        for (Guider g : currentLevel.getGuider())
+            if (g.isActive()) {
+                g.update(lvlData, playing);
+            }
     }
 
     public void draw(Graphics g, int xLvlOffset) {
         drawAnt(g, xLvlOffset);
         drawMantis(g, xLvlOffset);
+        drawGuider(g, xLvlOffset);
     }
 
     private void drawAnt(Graphics g, int xLvlOffset) {
@@ -64,6 +70,23 @@ public class EnemyManager {
             }
     }
 
+    private void drawGuider(Graphics g, int xLvlOffset) {
+        for (Guider gu : currentLevel.getGuider()) {
+            if (gu.isActive() && gu.isSeeingPlayer()) {
+                g.drawImage(guiderArr[gu.getState()][gu.getAniIndex()], (int) gu.getHitbox().x - xLvlOffset - GUIDER_DRAWOFFSET_X + gu.flipX(), (int) gu.getHitbox().y - GUIDER_DRAWOFFSET_Y,
+                        GUIDER_WIDTH * gu.flipW(), GUIDER_HEIGHT, null);
+                gu.drawDialogueBox(g, xLvlOffset);
+
+
+                gu.drawHitbox(g, xLvlOffset);
+                gu.drawAttackBox(g, xLvlOffset);
+            }
+        }
+
+
+
+    }
+
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
         for (Ant a : currentLevel.getAnts())
             if (a.isActive())
@@ -80,11 +103,20 @@ public class EnemyManager {
                         m.hurt(10);
                         return;
                         }
+
+        for (Guider g : currentLevel.getGuider())
+            if (g.isActive())
+                if (g.getState() != DEAD)
+                    if (attackBox.intersects(g.getHitbox())) {
+                        g.hurt(10);
+                        return;
+                    }
     }
 
     private void loadEnemyImgs() {
         mantisArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.MANTIS_SPRITE), 7, 4, MANTIS_WIDTH_DEFAULT, MANTIS_HEIGHT_DEFAULT);
         antArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.ANT_SPRITE), 5, 4, ANT_WIDTH_DEFAULT, ANT_HEIGHT_DEFAULT);
+        guiderArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.GUIDER_SPRITE), 6, 6, GUIDER_WIDTH_DEFAULT, GUIDER_HEIGHT_DEFAULT);
     }
 
     private BufferedImage[][] getImgArr(BufferedImage atlas, int xSize, int ySize, int spriteW, int spriteH) {
@@ -100,6 +132,11 @@ public class EnemyManager {
             a.resetEnemy();
         for (Mantis m : currentLevel.getMantis())
             m.resetEnemy();
+        for (Guider g : currentLevel.getGuider()) {
+            g.resetEnemy();
+            g.resetDialogue();
+        }
+
     }
 
 }

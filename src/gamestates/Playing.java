@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import entities.EnemyManager;
+import entities.Guider;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -243,7 +244,6 @@ public class Playing extends State implements Statemethods {
             levelCompletedOverlay.mousePressed(e);
         else if (gameCompleted)
             gameCompletedOverlay.mousePressed(e);
-
     }
 
     @Override

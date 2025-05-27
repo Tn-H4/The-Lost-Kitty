@@ -65,11 +65,14 @@ public class Constants {
 	public static class EnemyConstants {
 		public static final int ANT = 0;
 		public static final int MANTIS = 1;
+		public static final int GUIDER = 2;
 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
 		public static final int ATTACK = 2;
 		public static final int DEAD = 3;
+		public static final int APPEARING = 4;
+		public static final int TALKING = 5;
 
 		public static final int ANT_WIDTH_DEFAULT = 72;
 		public static final int ANT_HEIGHT_DEFAULT = 32;
@@ -84,6 +87,13 @@ public class Constants {
 		public static final int MANTIS_HEIGHT = (int) (MANTIS_HEIGHT_DEFAULT * Game.SCALE);
 		public static final int MANTIS_DRAWOFFSET_X = (int) (26 * Game.SCALE);
 		public static final int MANTIS_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
+
+		public static final int GUIDER_WIDTH_DEFAULT = 32;
+		public static final int GUIDER_HEIGHT_DEFAULT = 32;
+		public static final int GUIDER_WIDTH = (int) (GUIDER_WIDTH_DEFAULT * Game.SCALE * 1.5);
+		public static final int GUIDER_HEIGHT = (int) (GUIDER_HEIGHT_DEFAULT * Game.SCALE * 1.5);
+		public static final int GUIDER_DRAWOFFSET_X = (int) (10 * Game.SCALE);
+		public static final int GUIDER_DRAWOFFSET_Y = (int) (8 * Game.SCALE);
 
 		public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 			switch (enemy_state) {
@@ -104,12 +114,18 @@ public class Constants {
 						return 7;
 				case DEAD:
 					return 5;
+				case APPEARING:
+					return 6;
+				case TALKING:
+					return 2;
 			}
 			return 0;
 		}
 
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
+				case GUIDER:
+					return 1000;
 				case MANTIS:
 				case ANT:
 					return 10;
@@ -120,6 +136,8 @@ public class Constants {
 
 		public static int GetEnemyDmg(int enemy_type) {
 			switch (enemy_type) {
+				case GUIDER:
+					return 1000;
 				case MANTIS:
 				case ANT:
 					return 15;

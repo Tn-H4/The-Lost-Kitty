@@ -116,7 +116,7 @@ public abstract class Enemy extends Entity {
     protected boolean isPlayerCloseForAttack(Player player) {
         int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
         switch (enemyType) {
-            case MANTIS, ANT -> {
+            case MANTIS, ANT, GUIDER -> {
                 return absValue <= attackDistance;
             }
         }
@@ -124,8 +124,8 @@ public abstract class Enemy extends Entity {
     }
 
     public void hurt(int amount) {
-//        currentHealth -= amount;
-//        if (currentHealth <= 0)
+        currentHealth -= amount;
+        if (currentHealth <= 0)
             newState(DEAD);
     }
 
@@ -145,7 +145,7 @@ public abstract class Enemy extends Entity {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-                if (enemyType == MANTIS || enemyType == ANT) {
+                if (enemyType == MANTIS || enemyType == ANT || enemyType == GUIDER) {
                     aniIndex = 0;
 
                     switch (state) {
@@ -196,4 +196,7 @@ public abstract class Enemy extends Entity {
         return active;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

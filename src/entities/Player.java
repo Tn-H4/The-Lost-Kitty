@@ -442,6 +442,10 @@ public class Player extends Entity {
 		this.attacking = attacking;
 	}
 
+	public boolean isAttacking() {
+		return attacking;
+	}
+
 	public boolean isLeft() {
 		return left;
 	}
@@ -460,6 +464,10 @@ public class Player extends Entity {
 
 	public void setJump(boolean jump) {
 		this.jump = jump;
+	}
+
+	public boolean isJump() {
+		return jump;
 	}
 
 	public void resetAll() {
