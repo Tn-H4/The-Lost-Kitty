@@ -3,6 +3,7 @@ package entities;
 import static utilz.Constants.MobConstants.*;
 import static utilz.HelpMethods.IsFloor;
 
+import audio.AudioPlayer;
 import gamestates.Playing;
 
 import java.awt.*;
@@ -11,20 +12,23 @@ public class Boss extends Mob {
 
     private boolean canSeePlayerNow = false;
     private boolean showDialogue = false;
+    private long stateStartTime;
+    private static final int RUN_DURATION = 410;
+    private static final int IDLE_DURATION = 500;
 
     private final DialogueManager dialogueManager;
 
     public Boss(float x, float y) {
         super(x, y, BOSS_WIDTH, BOSS_HEIGHT, BOSS);
-        initHitbox(22, 19);
-        initAttackBox(22, 19, 20);
+        initHitbox(50, 30);
+        initAttackBox(90, 30, 20);
         this.dialogueManager = new DialogueManager(BOSS);
     }
 
     public void update(int[][] lvlData, Playing playing) {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
-        updateAttackBoxFlip();
+        updateAttackBox();
     }
 
     private void updateBehavior(int[][] lvlData, Playing playing) {
@@ -38,9 +42,13 @@ public class Boss extends Mob {
                 case IDLE:
                     if (IsFloor(hitbox, lvlData)) {
                         if (canSeePlayer(lvlData, playing.getPlayer())) {
-                            canSeePlayerNow = true;
-                            showDialogue = true;
-                            newState(TALKING);
+                            if (!dialogueManager.isFinished()) {
+                                canSeePlayerNow = true;
+                                showDialogue = true;
+                                newState(TALKING);
+                            } else if (System.currentTimeMillis() - stateStartTime >= IDLE_DURATION) {
+                                switchState(RUNNING);
+                            }
                         }
                     } else {
                         inAir = true;
@@ -48,14 +56,17 @@ public class Boss extends Mob {
                     break;
 
                 case RUNNING:
+                    if (System.currentTimeMillis() - stateStartTime >= RUN_DURATION) {
+                        switchState(IDLE);
+                        break;
+                    }
                     if (canSeePlayer(lvlData, playing.getPlayer())) {
                         turnTowardsPlayer(playing.getPlayer());
                         if (isPlayerCloseForAttack(playing.getPlayer())) {
                             newState(ATTACK);
                         }
                     }
-                    if(aniTick == 3)
-                        bossMove(lvlData);
+                        moveBoss(lvlData);
                     break;
 
                 case TALKING:
@@ -76,12 +87,14 @@ public class Boss extends Mob {
                         attackChecked = false;
                     if (aniIndex == 2 && !attackChecked)
                         checkPlayerHit(attackBox, playing.getPlayer());
+                    playing.getGame().getAudioPlayer().playEffect(AudioPlayer.BOSS_ATTACK);
                     break;
 
                 case DEAD:
                     showDialogue = false;
                     canSeePlayerNow = false;
                     setActive(false);
+                    playing.setLevelCompleted(true);
                     break;
             }
         }
@@ -93,8 +106,9 @@ public class Boss extends Mob {
         }
     }
 
-    public boolean isSeeingPlayer() {
-        return canSeePlayerNow;
+    private void switchState(int newState) {
+        state = newState;
+        stateStartTime = System.currentTimeMillis();
     }
 
     public void resetDialogue() {

@@ -17,6 +17,7 @@ public class AudioPlayer {
     public static int MENU = 0;
     public static int LEVEL_1 = 1;
     public static int LEVEL_2 = 2;
+    public static int LEVEL_3 = 3;
 
     public static int DIE = 0;
     public static int JUMP = 1;
@@ -25,6 +26,7 @@ public class AudioPlayer {
     public static int ATTACK_ONE = 4;
     public static int ATTACK_TWO = 5;
     public static int ATTACK_THREE = 6;
+    public static int BOSS_ATTACK = 7;
 
     private Clip[] songs, effects;
     private int currentSongId;
@@ -39,14 +41,14 @@ public class AudioPlayer {
     }
 
     private void loadSongs() {
-        String[] names = { "MainScreen", "Lvl1", "Lvl2" };
+        String[] names = { "MainScreen", "Lvl1", "Lvl2", "Lvl3" };
         songs = new Clip[names.length];
         for (int i = 0; i < songs.length; i++)
             songs[i] = getClip(names[i]);
     }
 
     private void loadEffects() {
-        String[] effectNames = { "CatDeath", "Jump", "GameOver", "LevelCompleted", "Attack1", "Attack2", "Attack3" };
+        String[] effectNames = { "CatDeath", "Jump", "GameOver", "LevelCompleted", "Attack1", "Attack2", "Attack3", "Slash" };
         effects = new Clip[effectNames.length];
         for (int i = 0; i < effects.length; i++)
             effects[i] = getClip(effectNames[i]);
@@ -86,10 +88,19 @@ public class AudioPlayer {
     }
 
     public void setLevelSong(int lvlIndex) {
-        if (lvlIndex % 2 == 0)
-            playSong(LEVEL_1);
-        else
-            playSong(LEVEL_2);
+        switch (lvlIndex) {
+            case 1:
+                playSong(LEVEL_1);
+                break;
+            case 2:
+                playSong(LEVEL_2);
+                break;
+            case 3:
+                playSong(LEVEL_3);
+                break;
+            default:
+                playSong(LEVEL_1);
+        }
     }
 
     public void lvlCompleted() {

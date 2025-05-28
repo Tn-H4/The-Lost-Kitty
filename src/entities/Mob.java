@@ -22,12 +22,6 @@ public abstract class Mob extends Entity {
     protected boolean attackChecked;
     protected int attackBoxOffsetX;
 
-    // For boss's movement
-    private long lastMoveTime = System.currentTimeMillis();
-    private static final int TILE_SIZE = 32;
-    private static final int MOVE_DISTANCE = TILE_SIZE * 2; // 64px
-    private static final int MOVE_INTERVAL = 2000; // in milliseconds (2 seconds)
-
     public Mob(float x, float y, int width, int height, int mobType) {
         super(x, y, width, height);
         this.mobType = mobType;
@@ -80,32 +74,21 @@ public abstract class Mob extends Entity {
         }
     }
 
-    protected void bossMove(int[][] lvlData) {
-        long currentTime = System.currentTimeMillis();
+    protected void moveBoss(int[][] lvlData) {
+        float xSpeed = 0;
 
-        // Wait until 2 seconds have passed before moving
-        if (currentTime - lastMoveTime < MOVE_INTERVAL) {
-            return;
-        }
+        if (walkDir == LEFT)
+            xSpeed = -walkSpeed * 2;
+        else
+            xSpeed = walkSpeed * 2;
 
-        float xSpeed;
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData))
+            if (IsFloor(hitbox, xSpeed, lvlData)) {
+                hitbox.x += xSpeed;
+                return;
+            }
 
-        if (walkDir == LEFT) {
-            xSpeed = -MOVE_DISTANCE;
-        } else {
-            xSpeed = MOVE_DISTANCE;
-        }
-
-        boolean canMove = CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData);
-        boolean hasFloor = IsFloor(hitbox, xSpeed, lvlData);
-
-        if (canMove && hasFloor) {
-            hitbox.x += xSpeed;
-        } else {
-            changeWalkDir();
-        }
-
-        lastMoveTime = currentTime;
+        changeWalkDir();
     }
 
     protected void move(int[][] lvlData) {

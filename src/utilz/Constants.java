@@ -100,8 +100,8 @@ public class Constants {
 		public static final int BOSS_HEIGHT_DEFAULT = 40;
 		public static final int BOSS_WIDTH = (int) (BOSS_WIDTH_DEFAULT * Game.SCALE * 1.75);
 		public static final int BOSS_HEIGHT = (int) (BOSS_HEIGHT_DEFAULT * Game.SCALE * 1.75);
-		public static final int BOSS_DRAWOFFSET_X = (int) (26 * Game.SCALE);
-		public static final int BOSS_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
+		public static final int BOSS_DRAWOFFSET_X = (int) (30 * Game.SCALE);
+		public static final int BOSS_DRAWOFFSET_Y = (int) (26 * Game.SCALE);
 
 		public static int GetSpriteAmount(int mob_type, int mob_state) {
 			switch (mob_state) {
@@ -115,10 +115,8 @@ public class Constants {
 				case RUNNING:
 					if (mob_type == ANT)
 						return 5;
-					if(mob_type == MANTIS)
-						return 4;
 					else
-						return 2;
+						return 4;
 				case ATTACK:
 					if (mob_type == ANT)
 						return 3;
@@ -145,6 +143,8 @@ public class Constants {
 			switch (enemy_type) {
 				case GUIDER:
 					return 1000;
+				case BOSS:
+					return 50;
 				default: //For faster demo
 					return 1;
 			}

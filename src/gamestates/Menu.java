@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import main.Game;
 import ui.MenuButton;
 import utilz.LoadSave;
@@ -13,6 +14,7 @@ public class Menu extends State implements Statemethods {
 
     private MenuButton[] buttons = new MenuButton[3];
     private BufferedImage backgroundImg;
+    private Playing playing;
 
     public Menu(Game game) {
         super(game);
