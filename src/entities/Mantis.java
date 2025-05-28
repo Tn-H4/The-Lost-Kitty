@@ -1,11 +1,11 @@
 package entities;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 import static utilz.HelpMethods.IsFloor;
 
 import gamestates.Playing;
 
-public class Mantis extends Enemy {
+public class Mantis extends Mob {
 //Mantis function: can see player and will follow to attack player
     public Mantis(float x, float y) {
         super(x, y, MANTIS_WIDTH, MANTIS_HEIGHT, MANTIS);

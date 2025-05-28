@@ -25,11 +25,11 @@ public class Player extends Entity {
 	private float xDrawOffset = 8 * Game.SCALE;
 	private float yDrawOffset = 1 * Game.SCALE;
 
-	// Jumping / Gravity
+	//Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 
-	// StatusBarUI
+	//StatusBarUI
 	private BufferedImage statusBarImg;
 
 	private int statusBarWidth = (int) (192 * Game.SCALE);
@@ -71,7 +71,7 @@ public class Player extends Entity {
 		this.playing = playing;
 		this.state = IDLE;
 		this.maxHealth = 100;
-		this.currentHealth = 35;
+		this.currentHealth = 100;
 		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();
 		initHitbox(25, 27);
@@ -400,7 +400,7 @@ public class Player extends Entity {
 		currentHealth = Math.max(Math.min(currentHealth, maxHealth), 0);
 	}
 
-	public void changeHealth(int value, Enemy e) {
+	public void changeHealth(int value, Mob e) {
 		if (state == HIT)
 			return;
 		changeHealth(value);

@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entities.Enemy;
+import entities.Mob;
 import entities.Player;
 import gamestates.Playing;
 import levels.Level;
@@ -40,7 +40,7 @@ public class ObjectManager {
                 p.kill();
     }
 
-    public void checkVinesTouched(Enemy e) {
+    public void checkVinesTouched(Mob e) {
         for (Vines v : currentLevel.getVines())
             if (v.getHitbox().intersects(e.getHitbox()))
                 e.hurt(200);

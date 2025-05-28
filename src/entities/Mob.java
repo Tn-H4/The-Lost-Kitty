@@ -1,6 +1,6 @@
 package entities;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
@@ -12,8 +12,8 @@ import static utilz.Constants.*;
 
 import main.Game;
 
-public abstract class Enemy extends Entity {
-    protected int enemyType;
+public abstract class Mob extends Entity {
+    protected int mobType;
     protected boolean firstUpdate = true;
     protected int walkDir = LEFT;
     protected int tileY;
@@ -22,11 +22,17 @@ public abstract class Enemy extends Entity {
     protected boolean attackChecked;
     protected int attackBoxOffsetX;
 
-    public Enemy(float x, float y, int width, int height, int enemyType) {
-        super(x, y, width, height);
-        this.enemyType = enemyType;
+    // For boss's movement
+    private long lastMoveTime = System.currentTimeMillis();
+    private static final int TILE_SIZE = 32;
+    private static final int MOVE_DISTANCE = TILE_SIZE * 2; // 64px
+    private static final int MOVE_INTERVAL = 2000; // in milliseconds (2 seconds)
 
-        maxHealth = GetMaxHealth(enemyType);
+    public Mob(float x, float y, int width, int height, int mobType) {
+        super(x, y, width, height);
+        this.mobType = mobType;
+
+        maxHealth = GetMaxHealth(mobType);
         currentHealth = maxHealth;
         walkSpeed = Game.SCALE * 0.35f;
     }
@@ -74,6 +80,34 @@ public abstract class Enemy extends Entity {
         }
     }
 
+    protected void bossMove(int[][] lvlData) {
+        long currentTime = System.currentTimeMillis();
+
+        // Wait until 2 seconds have passed before moving
+        if (currentTime - lastMoveTime < MOVE_INTERVAL) {
+            return;
+        }
+
+        float xSpeed;
+
+        if (walkDir == LEFT) {
+            xSpeed = -MOVE_DISTANCE;
+        } else {
+            xSpeed = MOVE_DISTANCE;
+        }
+
+        boolean canMove = CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData);
+        boolean hasFloor = IsFloor(hitbox, xSpeed, lvlData);
+
+        if (canMove && hasFloor) {
+            hitbox.x += xSpeed;
+        } else {
+            changeWalkDir();
+        }
+
+        lastMoveTime = currentTime;
+    }
+
     protected void move(int[][] lvlData) {
         float xSpeed = 0;
 
@@ -115,7 +149,7 @@ public abstract class Enemy extends Entity {
 
     protected boolean isPlayerCloseForAttack(Player player) {
         int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
-        switch (enemyType) {
+        switch (mobType) {
             case MANTIS, ANT, GUIDER, BOSS -> {
                 return absValue <= attackDistance;
             }
@@ -131,11 +165,8 @@ public abstract class Enemy extends Entity {
 
     protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
         if (attackBox.intersects(player.hitbox))
-            player.changeHealth(-GetEnemyDmg(enemyType), this);
-//        else {
-//            if (enemyType == ANT)
-//                return;
-//        }
+            player.changeHealth(-GetMobDmg(mobType), this);
+
         attackChecked = true;
     }
 
@@ -144,8 +175,8 @@ public abstract class Enemy extends Entity {
         if (aniTick >= ANI_SPEED) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-                if (enemyType == MANTIS || enemyType == ANT || enemyType == GUIDER || enemyType == BOSS) {
+            if (aniIndex >= GetSpriteAmount(mobType, state)) {
+                if (mobType == MANTIS || mobType == ANT || mobType == GUIDER || mobType == BOSS) {
                     aniIndex = 0;
 
                     switch (state) {

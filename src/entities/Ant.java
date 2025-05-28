@@ -1,11 +1,11 @@
 package entities;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 import static utilz.HelpMethods.IsFloor;
 
 import gamestates.Playing;
 //Ant function: hit when the player go through it
-public class Ant extends Enemy {
+public class Ant extends Mob {
 
     public Ant(float x, float y) {
         super(x, y, ANT_WIDTH, ANT_HEIGHT, ANT);

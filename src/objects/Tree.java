@@ -1,11 +1,8 @@
 package objects;
-public class Tree {
-    private int x, y, type;
+public class Tree extends GameObject{
 
-    public Tree (int x, int y, int type) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
+    public Tree(int x, int y, int objType) {
+        super(x, y, objType);
     }
 
     public int getX() {
@@ -14,7 +11,6 @@ public class Tree {
 
     public int getY() {
         return y;
-
     }
 
 }

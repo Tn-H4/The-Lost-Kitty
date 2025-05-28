@@ -62,7 +62,7 @@ public class Constants {
 		}
 	}
 
-	public static class EnemyConstants {
+	public static class MobConstants {
 		public static final int ANT = 0;
 		public static final int MANTIS = 1;
 		public static final int GUIDER = 2;
@@ -98,30 +98,41 @@ public class Constants {
 
 		public static final int BOSS_WIDTH_DEFAULT = 64;
 		public static final int BOSS_HEIGHT_DEFAULT = 40;
-		public static final int BOSS_WIDTH = (int) (BOSS_WIDTH_DEFAULT * Game.SCALE);
-		public static final int BOSS_HEIGHT = (int) (BOSS_HEIGHT_DEFAULT * Game.SCALE);
+		public static final int BOSS_WIDTH = (int) (BOSS_WIDTH_DEFAULT * Game.SCALE * 1.75);
+		public static final int BOSS_HEIGHT = (int) (BOSS_HEIGHT_DEFAULT * Game.SCALE * 1.75);
 		public static final int BOSS_DRAWOFFSET_X = (int) (26 * Game.SCALE);
 		public static final int BOSS_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
 
-		public static int GetSpriteAmount(int enemy_type, int enemy_state) {
-			switch (enemy_state) {
+		public static int GetSpriteAmount(int mob_type, int mob_state) {
+			switch (mob_state) {
 				case IDLE:
-					if (enemy_type == ANT)
+					if (mob_type == ANT)
 						return 1;
-					else
+					if(mob_type == MANTIS)
 						return 4;
+					else
+						return 2;
 				case RUNNING:
-					if (enemy_type == ANT)
+					if (mob_type == ANT)
+						return 5;
+					if(mob_type == MANTIS)
+						return 4;
+					else
+						return 2;
+				case ATTACK:
+					if (mob_type == ANT)
+						return 3;
+					if(mob_type == MANTIS)
+						return 7;
+					if(mob_type == GUIDER)
 						return 5;
 					else
-						return 4;
-				case ATTACK:
-					if (enemy_type == ANT)
 						return 3;
-					else
-						return 7;
 				case DEAD:
-					return 5;
+					if(mob_type == GUIDER || mob_type == BOSS)
+						return 6;
+					else
+						return 5;
 				case APPEARING:
 					return 6;
 				case TALKING:
@@ -134,15 +145,12 @@ public class Constants {
 			switch (enemy_type) {
 				case GUIDER:
 					return 1000;
-//				case MANTIS:
-//				case ANT:
-//					return 10;
-				default:
+				default: //For faster demo
 					return 1;
 			}
 		}
 
-		public static int GetEnemyDmg(int enemy_type) {
+		public static int GetMobDmg(int enemy_type) {
 			switch (enemy_type) {
 				case GUIDER:
 					return 1000;

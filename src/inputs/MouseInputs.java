@@ -64,12 +64,12 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// Not In use
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// Not In use
+
 	}
 
 }

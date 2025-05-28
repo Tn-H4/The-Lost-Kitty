@@ -12,7 +12,7 @@ import entities.Ant;
 import main.Game;
 import objects.*;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 import static utilz.Constants.ObjectConstants.*;
 
 public class Level {

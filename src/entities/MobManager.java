@@ -8,20 +8,20 @@ import gamestates.Playing;
 import levels.Level;
 import utilz.LoadSave;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 
-public class EnemyManager {
+public class MobManager {
 
     private Playing playing;
     private BufferedImage[][] antArr, mantisArr, guiderArr, bossArr;
     private Level currentLevel;
 
-    public EnemyManager(Playing playing) {
+    public MobManager(Playing playing) {
         this.playing = playing;
-        loadEnemyImgs();
+        loadMobImgs();
     }
 
-    public void loadEnemies(Level level) {
+    public void loadMobs(Level level) {
         this.currentLevel = level;
     }
 
@@ -82,7 +82,7 @@ public class EnemyManager {
                 g.drawImage(guiderArr[gu.getState()][gu.getAniIndex()], (int) gu.getHitbox().x - xLvlOffset - GUIDER_DRAWOFFSET_X + gu.flipX(), (int) gu.getHitbox().y - GUIDER_DRAWOFFSET_Y,
                         GUIDER_WIDTH * gu.flipW(), GUIDER_HEIGHT, null);
 
-                gu.drawDialogueBox(g, xLvlOffset);
+                gu.renderDialogue(g, xLvlOffset);
                 gu.drawHitbox(g, xLvlOffset);
                 gu.drawAttackBox(g, xLvlOffset);
             }
@@ -94,13 +94,13 @@ public class EnemyManager {
                 g.drawImage(bossArr[b.getState()][b.getAniIndex()], (int) b.getHitbox().x - xLvlOffset - BOSS_DRAWOFFSET_X + b.flipX(), (int) b.getHitbox().y - BOSS_DRAWOFFSET_Y,
                         BOSS_WIDTH * b.flipW(), BOSS_HEIGHT, null);
 
-                b.drawDialogueBox(g, xLvlOffset);
+                b.renderDialogue(g, xLvlOffset);
                 b.drawHitbox(g, xLvlOffset);
                 b.drawAttackBox(g, xLvlOffset);
             }
     }
 
-    public void checkEnemyHit(Rectangle2D.Float attackBox) {
+    public void checkMobHit(Rectangle2D.Float attackBox) {
         for (Ant a : currentLevel.getAnts())
             if (a.isActive())
                 if (a.getState() != DEAD)
@@ -134,11 +134,11 @@ public class EnemyManager {
                     }
     }
 
-    private void loadEnemyImgs() {
+    private void loadMobImgs() {
         mantisArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.MANTIS_SPRITE), 7, 4, MANTIS_WIDTH_DEFAULT, MANTIS_HEIGHT_DEFAULT);
         antArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.ANT_SPRITE), 5, 4, ANT_WIDTH_DEFAULT, ANT_HEIGHT_DEFAULT);
         guiderArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.GUIDER_SPRITE), 6, 6, GUIDER_WIDTH_DEFAULT, GUIDER_HEIGHT_DEFAULT);
-        bossArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.BOSS_SPRITE), 6, 4, BOSS_WIDTH_DEFAULT, BOSS_HEIGHT_DEFAULT);
+        bossArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.BOSS_SPRITE), 6, 6, BOSS_WIDTH_DEFAULT, BOSS_HEIGHT_DEFAULT);
     }
 
     private BufferedImage[][] getImgArr(BufferedImage atlas, int xSize, int ySize, int spriteW, int spriteH) {
@@ -149,7 +149,7 @@ public class EnemyManager {
         return tempArr;
     }
 
-    public void resetAllEnemies() {
+    public void resetAllMobs() {
         for (Ant a : currentLevel.getAnts())
             a.resetEnemy();
         for (Mantis m : currentLevel.getMantis())

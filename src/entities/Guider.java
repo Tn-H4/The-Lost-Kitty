@@ -1,84 +1,34 @@
 package entities;
 
-import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.MobConstants.*;
 import static utilz.HelpMethods.IsFloor;
 
 import gamestates.Playing;
 
 import java.awt.*;
 
-public class Guider extends Enemy {
+public class Guider extends Mob {
 
     private boolean canSeePlayerNow = false;
-    private final String[] dialogueLines;
-    private int currentDialogueIndex = 0;
     private boolean showDialogue = false;
-    private boolean dialogueFinished = false;
 
     private boolean moveTriggered = false;
     private boolean jumpTriggered = false;
     private boolean attackTriggered = false;
 
-    // Dialogue box dimensions
-    private static final int DIALOGUE_BOX_WIDTH = 260;
-    private static final int DIALOGUE_BOX_HEIGHT = 80;
+    private final DialogueManager dialogueManager;
 
     public Guider(float x, float y) {
         super(x, y, GUIDER_WIDTH, GUIDER_HEIGHT, GUIDER);
         initHitbox(22, 22);
         initAttackBox(42, 19, 10);
-        dialogueLines = DialogueManager.getDialogueForEnemy(enemyType);
+        this.dialogueManager = new DialogueManager(GUIDER);
     }
 
     public void update(int[][] lvlData, Playing playing) {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
         updateAttackBox();
-    }
-
-    public boolean isSeeingPlayer() {
-        return canSeePlayerNow;
-    }
-
-    public void advanceDialogue() {
-        if (!showDialogue || dialogueFinished) return;
-
-        currentDialogueIndex++;
-        if (currentDialogueIndex >= dialogueLines.length) {
-            endDialogue();
-        }
-    }
-
-    private void endDialogue() {
-        showDialogue = false;
-        dialogueFinished = true;
-        currentDialogueIndex = 0;
-//        newState(DEAD); // Optional: Guider disappears after talking
-    }
-
-    private final DialogueAction[] requiredActions = {
-            DialogueAction.NONE,
-            DialogueAction.MOVE,
-            DialogueAction.JUMP,
-            DialogueAction.ATTACK
-    };
-
-    public void drawDialogueBox(Graphics g, int xLvlOffset) {
-        if (!showDialogue || dialogueFinished) return;
-
-        String text = dialogueLines[currentDialogueIndex];
-
-        int boxX = (int) hitbox.x - xLvlOffset - 10;
-        int boxY = (int) hitbox.y - DIALOGUE_BOX_HEIGHT - 20;
-
-        g.setColor(new Color(0, 0, 0, 180));
-        g.fillRoundRect(boxX, boxY, DIALOGUE_BOX_WIDTH, DIALOGUE_BOX_HEIGHT, 15, 15);
-
-        g.setColor(Color.WHITE);
-        g.drawRoundRect(boxX, boxY, DIALOGUE_BOX_WIDTH, DIALOGUE_BOX_HEIGHT, 15, 15);
-
-        g.setFont(new Font("Arial", Font.PLAIN, 14));
-        g.drawString(text, boxX + 10, boxY + 30);
     }
 
     private void updateBehavior(int[][] lvlData, Playing playing) {
@@ -95,90 +45,92 @@ public class Guider extends Enemy {
                             canSeePlayerNow = true;
                             newState(APPEARING);
                         }
-                    }
-                    else
+                    } else {
                         inAir = true;
+                    }
                     break;
+
                 case APPEARING:
                     if (aniIndex == 5)
                         newState(TALKING);
                     break;
 
                 case TALKING:
-                    turnTowardsPlayer(playing.getPlayer());
                     showDialogue = true;
 
-                    DialogueAction action = requiredActions[currentDialogueIndex];
+                    if (playing.getPlayer().isAttacking() && playing.getPlayer().getHitbox().intersects(this.hitbox)) {
+                        showDialogue = false;
+                        newState(ATTACK);
+                        break;
+                    }// If guider is attacked during talk
 
-                    switch (action) {
-                        case NONE:
-                            advanceDialogue();
-                            break;
+                    if (!dialogueManager.isFinished()) {
+                        DialogueAction action = dialogueManager.getCurrentRequiredAction();
 
-                        case MOVE:
-                            if (currentDialogueIndex == 1 && playing.getPlayer().isRight()) {
-                                if (!moveTriggered) {
+                        switch (action) {
+                            case CHECK_NONE -> dialogueManager.updateAutoAdvance();
+
+                            case CHECK_MOVE -> {
+                                if (playing.getPlayer().isRight() && !moveTriggered) {
                                     moveTriggered = true;
-                                    advanceDialogue();
+                                    dialogueManager.advance();
                                 }
                             }
-                            break;
 
-                        case JUMP:
-                            if (currentDialogueIndex == 2 && moveTriggered && playing.getPlayer().isJump()) {
-                                if (!jumpTriggered) {
+                            case CHECK_JUMP -> {
+                                if (moveTriggered && playing.getPlayer().isJump() && !jumpTriggered) {
                                     jumpTriggered = true;
-                                    advanceDialogue();
+                                    dialogueManager.advance();
                                 }
                             }
-                            break;
 
-                        case ATTACK:
-                            if (currentDialogueIndex == 3 && moveTriggered && jumpTriggered && playing.getPlayer().isAttacking()) {
-                                if (!attackTriggered) {
+                            case CHECK_ATTACK -> {
+                                if (jumpTriggered && playing.getPlayer().isAttacking() && !attackTriggered) {
                                     attackTriggered = true;
-                                    advanceDialogue();
+                                    dialogueManager.advance();
                                 }
                             }
-                            break;
+                        }
+                    } else {
+                        showDialogue = false;
+                        newState(DEAD);
                     }
                     break;
-
-
-
 
                 case ATTACK:
                     if (aniIndex == 0)
                         attackChecked = false;
-                    if (aniIndex == 2 && !attackChecked)
+                    if (aniIndex == 4 && !attackChecked)
                         checkPlayerHit(attackBox, playing.getPlayer());
-//                    newState(DEAD);
                     break;
+
                 case DEAD:
-                    showDialogue = false;
-                    canSeePlayerNow = false;
-                    setActive(false);
+                    if (aniIndex == 5) {
+                        showDialogue = false;
+                        canSeePlayerNow = false;
+                        setActive(false);
+                    }
                     break;
-
-
-
             }
         }
     }
-    public void resetDialogue() {
-        currentDialogueIndex = 0;
-        dialogueFinished = false;
-        showDialogue = false;
 
-        // Reset action triggers
-        moveTriggered = false;
-        jumpTriggered = false;
-        attackTriggered = false;
-
-        // Reset state and make Guider active
-        setActive(true);
-        canSeePlayerNow = false;
-        newState(IDLE); // or APPEARING if you want to trigger the entrance animation again
+    public void renderDialogue(Graphics g, int xLvlOffset) {
+        if (showDialogue && !dialogueManager.isFinished()) {
+            dialogueManager.drawDialogueBox(g, (int) hitbox.x, (int) hitbox.y, xLvlOffset);
+        }
     }
 
+    public boolean isSeeingPlayer() {
+        return canSeePlayerNow;
+    }
+
+    public void resetDialogue() {
+        dialogueManager.reset();
+        showDialogue = false;
+        canSeePlayerNow = false;
+        moveTriggered = jumpTriggered = attackTriggered = false;
+        setActive(true);
+        newState(IDLE);
+    }
 }
