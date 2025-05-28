@@ -15,6 +15,7 @@ public class Guider extends Mob {
     private boolean moveTriggered = false;
     private boolean jumpTriggered = false;
     private boolean attackTriggered = false;
+    private boolean sprintTriggered = false;
 
     private final DialogueManager dialogueManager;
 
@@ -87,6 +88,12 @@ public class Guider extends Mob {
                             case CHECK_ATTACK -> {
                                 if (jumpTriggered && playing.getPlayer().isAttacking() && !attackTriggered) {
                                     attackTriggered = true;
+                                    dialogueManager.advance();
+                                }
+                            }
+                            case CHECK_SPRINT -> {
+                                if(attackTriggered && playing.getPlayer().isSprint() && !sprintTriggered) {
+                                    sprintTriggered = true;
                                     dialogueManager.advance();
                                 }
                             }

@@ -446,6 +446,7 @@ public class Player extends Entity {
 		return attacking;
 	}
 
+
 	public boolean isLeft() {
 		return left;
 	}
@@ -468,6 +469,10 @@ public class Player extends Entity {
 
 	public boolean isJump() {
 		return jump;
+	}
+
+	public boolean isSprint() {
+		return powerAttackActive;
 	}
 
 	public void resetAll() {

@@ -7,10 +7,11 @@ public class DialogueManager {
     private final String[] dialogueLines;
     private final DialogueAction[] requiredActions;
     private int currentIndex = 0;
+    private long elapsed;
 
     private long dialogueStartTime = 0;
     private boolean waitingForDelay = false;
-    private static final long AUTO_ADVANCE_DELAY_MS = 2000; // 2 seconds
+    private static final long AUTO_ADVANCE_DELAY_MS = 1500; // 2 seconds
 
     public DialogueManager(int enemyType) {
         this.dialogueLines = getDialogueForEnemy(enemyType);
@@ -40,10 +41,11 @@ public class DialogueManager {
 
     public void updateAutoAdvance() {
         if (waitingForDelay) {
-            long elapsed = System.currentTimeMillis() - dialogueStartTime;
+            elapsed = System.currentTimeMillis() - dialogueStartTime;
             if (elapsed >= AUTO_ADVANCE_DELAY_MS) {
                 advance();
                 waitingForDelay = false;
+                elapsed = 0;
             }
         }
     }
@@ -82,13 +84,16 @@ public class DialogueManager {
     public static String[] getDialogueForEnemy(int enemyType) {
         return switch (enemyType) {
             case GUIDER -> new String[]{
-                    "Welcome to Level 1!",
-                    "Use arrow keys to move.",
-                    "Press space to jump.",
-                    "Click to attack."
+                    "You need to get out of the wood!",
+                    "Use A and D to move around",
+                    "Press SPACE to jump.",
+                    "Right Click to attack.",
+                    "Left Click to sprint",
+                    "Eat fish to regain health",
+                    "Find your way out now!"
             };
             case BOSS -> new String[]{
-                    "Prepare to be defeated!"
+                    "Prepare to be dead, little kitty!"
             };
             default -> new String[]{"Hello, adventurer!"};
         };
@@ -97,10 +102,13 @@ public class DialogueManager {
     public static DialogueAction[] getActionsForEnemy(int enemyType) {
         return switch (enemyType) {
             case GUIDER -> new DialogueAction[]{
-                    DialogueAction.CHECK_NONE,    // "Welcome to Level 1!"
-                    DialogueAction.CHECK_MOVE,    // "Use arrow keys to move."
-                    DialogueAction.CHECK_JUMP,    // "Press space to jump."
-                    DialogueAction.CHECK_ATTACK   // "Click to attack."
+                    DialogueAction.CHECK_NONE,
+                    DialogueAction.CHECK_MOVE,
+                    DialogueAction.CHECK_JUMP,
+                    DialogueAction.CHECK_ATTACK,
+                    DialogueAction.CHECK_SPRINT,
+                    DialogueAction.CHECK_NONE,
+                    DialogueAction.CHECK_NONE
             };
             case BOSS -> new DialogueAction[]{
                     DialogueAction.CHECK_NONE
