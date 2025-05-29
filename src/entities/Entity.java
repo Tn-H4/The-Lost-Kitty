@@ -1,8 +1,6 @@
 package entities;
 
-import static utilz.Constants.Directions.DOWN;
-import static utilz.Constants.Directions.LEFT;
-import static utilz.Constants.Directions.UP;
+import static utilz.Constants.Directions.*;
 import static utilz.HelpMethods.CanMoveHere;
 
 import java.awt.Color;

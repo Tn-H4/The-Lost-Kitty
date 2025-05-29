@@ -72,7 +72,7 @@ public class Guider extends Mob {
                             case CHECK_NONE -> dialogueManager.updateAutoAdvance();
 
                             case CHECK_MOVE -> {
-                                if (playing.getPlayer().isRight() && !moveTriggered) {
+                                if (playing.getPlayer().isRight() && playing.getPlayer().isLeft() && !moveTriggered) {
                                     moveTriggered = true;
                                     dialogueManager.advance();
                                 }
