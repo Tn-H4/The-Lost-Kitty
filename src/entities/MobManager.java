@@ -97,7 +97,9 @@ public class MobManager {
                 b.renderDialogue(g, xLvlOffset);
                 b.drawHitbox(g, xLvlOffset);
                 b.drawAttackBox(g, xLvlOffset);
-            }
+            } else
+                playing.setLevelCompleted(true);
+
     }
 
     public void checkMobHit(Rectangle2D.Float attackBox) {

@@ -1,6 +1,9 @@
 package entities;
 
+import static utilz.Constants.ANI_SPEED;
 import static utilz.Constants.MobConstants.*;
+import static utilz.Constants.PlayerConstants.DEAD;
+import static utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static utilz.HelpMethods.IsFloor;
 
 import audio.AudioPlayer;
@@ -71,6 +74,8 @@ public class Boss extends Mob {
 
                 case TALKING:
                     if (!dialogueManager.isFinished()) {
+                        if (canSeePlayer(lvlData, playing.getPlayer()))
+                            turnTowardsPlayer(playing.getPlayer());
                         DialogueAction action = dialogueManager.getCurrentRequiredAction();
 
                         switch (action) {
@@ -91,10 +96,11 @@ public class Boss extends Mob {
                     break;
 
                 case DEAD:
-                    showDialogue = false;
-                    canSeePlayerNow = false;
-                    setActive(false);
-                    playing.setLevelCompleted(true);
+                    if (aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= ANI_SPEED - 1) {
+                        showDialogue = false;
+                        canSeePlayerNow = false;
+                        setActive(false);
+                    }
                     break;
             }
         }

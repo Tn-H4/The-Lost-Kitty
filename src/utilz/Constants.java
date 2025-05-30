@@ -93,8 +93,8 @@ public class Constants {
 		public static final int GUIDER_HEIGHT_DEFAULT = 32;
 		public static final int GUIDER_WIDTH = (int) (GUIDER_WIDTH_DEFAULT * Game.SCALE * 1.5);
 		public static final int GUIDER_HEIGHT = (int) (GUIDER_HEIGHT_DEFAULT * Game.SCALE * 1.5);
-		public static final int GUIDER_DRAWOFFSET_X = (int) (10 * Game.SCALE);
-		public static final int GUIDER_DRAWOFFSET_Y = (int) (8 * Game.SCALE);
+		public static final int GUIDER_DRAWOFFSET_X = (int) (8 * Game.SCALE);
+		public static final int GUIDER_DRAWOFFSET_Y = (int) (19 * Game.SCALE);
 
 		public static final int BOSS_WIDTH_DEFAULT = 64;
 		public static final int BOSS_HEIGHT_DEFAULT = 40;

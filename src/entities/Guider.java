@@ -21,8 +21,8 @@ public class Guider extends Mob {
 
     public Guider(float x, float y) {
         super(x, y, GUIDER_WIDTH, GUIDER_HEIGHT, GUIDER);
-        initHitbox(22, 22);
-        initAttackBox(42, 19, 10);
+        initHitbox(30, 22);
+        initAttackBox(50, 22, 10);
         this.dialogueManager = new DialogueManager(GUIDER);
     }
 

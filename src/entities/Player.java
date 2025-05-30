@@ -86,7 +86,7 @@ public class Player extends Entity {
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (15 * Game.SCALE), (int) (20 * Game.SCALE));
 		resetAttackBox();
 	}
 
@@ -184,7 +184,7 @@ public class Player extends Entity {
 	}
 
 	private void setAttackBoxOnLeftSide() {
-		attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 10);
+		attackBox.x = hitbox.x - hitbox.width + (int) (Game.SCALE * 15);
 	}
 
 	private void updateAttackBox() {
@@ -350,7 +350,6 @@ public class Player extends Entity {
 				airSpeed += GRAVITY;
 				updateXPos(xSpeed);
 			} else {
-				//hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
 				if (airSpeed > 0)
 					resetInAir();
 				else
