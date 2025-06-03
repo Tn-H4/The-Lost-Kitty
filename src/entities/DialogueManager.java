@@ -65,7 +65,7 @@ public class DialogueManager {
     public void drawDialogueBox(java.awt.Graphics g, int entityX, int entityY, int xLvlOffset) {
         if (isFinished()) return;
 
-        final int BOX_WIDTH = 260;
+        final int BOX_WIDTH = 300;
         final int BOX_HEIGHT = 80;
 
         int boxX = entityX - xLvlOffset - 10;
@@ -77,7 +77,7 @@ public class DialogueManager {
         g.setColor(java.awt.Color.WHITE);
         g.drawRoundRect(boxX, boxY, BOX_WIDTH, BOX_HEIGHT, 15, 15);
 
-        g.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 14));
+        g.setFont(new java.awt.Font("Chiller", java.awt.Font.PLAIN, 27));
         g.drawString(getCurrentLine(), boxX + 10, boxY + 30);
     }
 
