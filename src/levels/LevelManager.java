@@ -38,7 +38,7 @@ public class LevelManager {
 	}
 
 	private void importOutsideSprites() {
-		BufferedImage[] atlases = LoadSave.GetAllTileAtlases(); // Add this method in LoadSave
+		BufferedImage[] atlases = LoadSave.GetAllTileAtlases(); 
 		allLevelSprites = new BufferedImage[atlases.length][48];
 
 		for (int lvl = 0; lvl < atlases.length; lvl++) {

@@ -66,7 +66,7 @@ public class DialogueManager {
         if (isFinished()) return;
 
         final int BOX_WIDTH = 300;
-        final int BOX_HEIGHT = 80;
+        final int BOX_HEIGHT = 50;
 
         int boxX = entityX - xLvlOffset - 10;
         int boxY = entityY - BOX_HEIGHT - 20;
@@ -95,7 +95,7 @@ public class DialogueManager {
             case BOSS -> new String[]{
                     "Prepare to be dead, little kitty!"
             };
-            default -> new String[]{"Hello, adventurer!"};
+            default -> new String[]{"Greeting, lost Kitty!"};
         };
     }
 

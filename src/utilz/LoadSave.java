@@ -36,6 +36,7 @@ public class LoadSave {
 	public static final String BRUSH_IMG = "Brush.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
+
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
 		try {
