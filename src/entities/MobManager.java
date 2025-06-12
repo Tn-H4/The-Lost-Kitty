@@ -60,8 +60,8 @@ public class MobManager {
                 g.drawImage(antArr[a.getState()][a.getAniIndex()], (int) a.getHitbox().x - xLvlOffset - ANT_DRAWOFFSET_X + a.flipX(), (int) a.getHitbox().y - ANT_DRAWOFFSET_Y,
                         ANT_WIDTH * a.flipW(), ANT_HEIGHT, null);
 
-                a.drawHitbox(g, xLvlOffset);
-                a.drawAttackBox(g, xLvlOffset);
+//                a.drawHitbox(g, xLvlOffset);
+//                a.drawAttackBox(g, xLvlOffset);
             }
     }
 
@@ -71,8 +71,8 @@ public class MobManager {
                 g.drawImage(mantisArr[m.getState()][m.getAniIndex()], (int) m.getHitbox().x - xLvlOffset - MANTIS_DRAWOFFSET_X + m.flipX(), (int) m.getHitbox().y - MANTIS_DRAWOFFSET_Y,
                         MANTIS_WIDTH * m.flipW(), MANTIS_HEIGHT, null);
 
-                m.drawHitbox(g, xLvlOffset);
-                m.drawAttackBox(g, xLvlOffset);
+//                m.drawHitbox(g, xLvlOffset);
+//                m.drawAttackBox(g, xLvlOffset);
             }
     }
 
@@ -83,8 +83,8 @@ public class MobManager {
                         GUIDER_WIDTH * gu.flipW(), GUIDER_HEIGHT, null);
 
                 gu.renderDialogue(g, xLvlOffset);
-                gu.drawHitbox(g, xLvlOffset);
-                gu.drawAttackBox(g, xLvlOffset);
+//                gu.drawHitbox(g, xLvlOffset);
+//                gu.drawAttackBox(g, xLvlOffset);
             }
     }
 
@@ -95,8 +95,8 @@ public class MobManager {
                         BOSS_WIDTH * b.flipW(), BOSS_HEIGHT, null);
 
                 b.renderDialogue(g, xLvlOffset);
-                b.drawHitbox(g, xLvlOffset);
-                b.drawAttackBox(g, xLvlOffset);
+//                b.drawHitbox(g, xLvlOffset);
+//                b.drawAttackBox(g, xLvlOffset);
             } else
                 playing.setLevelCompleted(true);
 

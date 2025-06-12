@@ -136,7 +136,7 @@ public class Guider extends Mob {
         dialogueManager.reset();
         showDialogue = false;
         canSeePlayerNow = false;
-        moveTriggered = jumpTriggered = attackTriggered = false;
+        moveTriggered = jumpTriggered = attackTriggered = sprintTriggered =  false;
         setActive(true);
         newState(IDLE);
     }
